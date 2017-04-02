@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="efd_simulation" default="all">
+    
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="simulation.libraries">
+    <pathelement location="${basedir}/libs/bcprov-jdk15-1.46.jar"/>
+    <pathelement location="${basedir}/libs/cloning-1.9.0.jar"/>
+    <pathelement location="${basedir}/libs/commons-io-2.5.jar"/>
+    <pathelement location="${basedir}/libs/hamcrest-core-1.3.jar"/>
+    <pathelement location="${basedir}/libs/junit-4.11.jar"/>
+    <pathelement location="${basedir}/libs/junit-addons-1.4.jar"/>
+    <pathelement location="${basedir}/libs/mockito-all-1.9.5.jar"/>
+    <pathelement location="${basedir}/libs/objenesis-1.2.jar"/>
+    <pathelement location="${basedir}/libs/org.eclipse.emf.common-2.9.0-v20130528-0742.jar"/>
+    <pathelement location="${basedir}/libs/org.eclipse.emf.ecore.xmi-2.9.0-v20130528-0742.jar"/>
+    <pathelement location="${basedir}/libs/org.eclipse.emf.ecore-2.9.0-v20130528-0742.jar"/>
+    <pathelement location="${basedir}/libs/system-rules-1.6.0.jar"/>
+    <pathelement location="${basedir}/libs/xercesImpl-2.6.2.jar"/>
+    <pathelement location="${basedir}/libs/xml-apis-1.3.04.jar"/>
+    <pathelement location="${basedir}/libs/xmlParserAPIs-2.6.2.jar"/>
+    <pathelement location="${basedir}/libs/cz.cuni.mff.d3s.jdeeco.core-3.0.1.jar"/>
+  </path>
+
+  <path id="visualization.libraries">
+    <pathelement location="${basedir}/libs/gdx-1.9.4.jar"/>
+    <pathelement location="${basedir}/libs/gdx-box2d-1.9.4.jar"/>
+    <pathelement location="${basedir}/libs/gdx-backend-lwjgl-1.9.4.jar"/>
+    <pathelement location="${basedir}/libs/jinput-2.0.5.jar"/>
+    <pathelement location="${basedir}/libs/jlayer-1.0.1-gdx.jar"/>
+    <pathelement location="${basedir}/libs/jorbis-0.0.17.jar"/>
+    <pathelement location="${basedir}/libs/jutils-1.0.0.jar"/>
+    <pathelement location="${basedir}/libs/lwjgl-2.9.2.jar"/>
+    <pathelement location="${basedir}/libs/lwjgl_util-2.9.2.jar"/>
+    <pathelement location="${basedir}/libs/lwjgl-platform-2.9.2-natives-windows.jar"/>
+    <pathelement location="${basedir}/libs/jinput-platform-2.0.5-natives-windows.jar"/>
+    <pathelement location="${basedir}/libs/gdx-platform-1.9.4-natives-desktop.jar"/>
+    <pathelement location="${basedir}/libs/gdx-box2d-platform-1.9.4-natives-desktop.jar"/>
+  </path>
+
+  <path id="libraries">
+    <path refid="simulation.libraries"/>
+    <path refid="visualization.libraries"/>
+  </path>
+  
+  <!-- Compile, clean and javadoc -->
+  
+  <dirname property="basedir" file="${ant.file}"/>
+  <property name="compiler.args.all" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  <property name="output.dir" value="${basedir}/out/"/>
+  <property name="javadoc.dir" value="${basedir}/doc/"/>
+   
+  <path id="sourcepath">
+    <dirset dir="${basedir}">
+      <include name="src/java"/>
+    </dirset>
+  </path>
+  
+  <target name="compile.all" description="Compile all">
+    <mkdir dir="${output.dir}"/>
+    <javac destdir="${output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.all}"/>
+      <classpath refid="libraries"/>
+      <src refid="sourcepath"/>
+    </javac>
+  </target>
+  
+  <target name="clean" description="cleanup all">
+    <delete dir="${output.dir}"/>
+    <delete dir="${javadoc.dir}"/>
+    <delete dir="logs"/>
+  </target>
+  
+  <target name="all" depends="clean, compile.all" description="build all"/>
+  
+  <target name="doc" description="Generates javadoc documentation">
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc sourcepathref="sourcepath" destdir="${javadoc.dir}" Encoding="utf-8" classpathref="libraries"/>
+  </target>
+
+  <!-- Run -->
+
+  <path id="simulation.classpath">
+    <pathelement location="${output.dir}"/>
+    <path refid="simulation.libraries"/>
+  </path>
+
+  <target name="run.simulation" depends="compile.all" description="Executes simulation">
+    <java fork="true" classname="com.khalev.efd.simulation.Main">
+      <arg line="${args}"/>
+      <classpath refid="simulation.classpath"/>
+    </java>
+  </target>
+
+  <path id="visualization.classpath">
+    <pathelement location="${output.dir}"/>
+    <path refid="visualization.libraries"/>
+  </path>
+
+  <target name="run.visualization" depends="compile.all" description="Executes visualization">
+    <java fork="true" classname="com.khalev.efd.visualization.DesktopLauncher">
+      <arg line="${args}"/>
+      <classpath refid="visualization.classpath"/>
+    </java>
+  </target>
+  
+</project>

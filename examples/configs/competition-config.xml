@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<visualization zoom="7" maxCPS="10" fontColor="Green">
+	<background texture="examples\images\bricks.jpg"/>
+	<objects>
+		<class-based>
+			<default color="yellow"/>
+			<class name="com.khalev.efd.robots.competition.CommandStation" texture="examples\images\station.png"/>
+			<class name="com.khalev.efd.robots.competition.PowerStation" texture="examples\images\station.png"/>
+		</class-based>
+	</objects>
+	<robots displayNumbers="true" displayTags="true" enableRotation="true" fontColor="Blue">
+		<class-based>
+			<default color="red"/>
+			<class name="com.khalev.efd.robots.competition.ControlledRobot" texture="examples\images\robot.png"/>
+			<class name="com.khalev.efd.robots.competition.AutonomousRobot" texture="examples\images\robot_sprite.png"/>
+		</class-based>
+	</robots>
+</visualization>

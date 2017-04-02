@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="visualization">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="robots" minOccurs="0" type="objects"/>
+                <xs:element name="objects" minOccurs="0" type="objects"/>
+                <xs:element name="background" type="coloring" minOccurs="0"/>
+                <xs:element name="map" type="coloring" minOccurs="0"/>
+                <xs:element name="additional" type="loader" minOccurs="0"/>
+            </xs:choice>
+            <xs:attribute name="zoom" type="xs:integer" use="optional"/>
+            <xs:attribute name="maxCPS" type="xs:integer" use="optional"/>
+            <xs:attribute name="fontColor" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="objects">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element name="tag-based">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="default" type="coloring" minOccurs="0"/>
+							<xs:element name="tag" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="coloring">
+											<xs:attribute name="name" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="number-based">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="default" type="coloring" minOccurs="0"/>
+					        <xs:element name="number">
+                                <xs:complexType>
+                                    <xs:complexContent>
+										<xs:extension base="coloring">
+											<xs:attribute name="number" type="xs:integer" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="class-based">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="default" type="coloring" minOccurs="0"/>
+                            <xs:element name="class" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="coloring">
+											<xs:attribute name="name" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>    
+        <xs:attribute name="displayNumbers" type="xs:boolean" use="optional"/>
+        <xs:attribute name="displayTags" type="xs:boolean" use="optional"/>
+        <xs:attribute name="enableRotation" type="xs:boolean" use="optional"/>
+        <xs:attribute name="fontColor" type="xs:string" use="optional"/>
+        <xs:attribute name="circularShape" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="coloring">
+        <xs:attribute name="color" type="xs:string" use="optional"/>
+        <xs:attribute name="texture" type="xs:string" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="loader">
+        <xs:attribute name="class" type="xs:string" use="required"/>
+        <xs:attribute name="arg" type="xs:string" use="optional"/>
+    </xs:complexType>
+</xs:schema>

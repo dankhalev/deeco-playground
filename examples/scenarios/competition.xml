@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<simulation cycles="500" logfile="simulation-logs\competition.txt" sizeX="100" sizeY="100">
+	<sensors>
+		<sensor name="coords" processor="com.khalev.efd.robots.GlobalCoordinatesProcessor"/>
+		<sensor name="energy" processor="com.khalev.efd.robots.competition.EnergyProcessor"/>
+	</sensors>
+	<robots>
+		<robot class="com.khalev.efd.robots.competition.ControlledRobot" posX="8.0" posY="3" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.ControlledRobot" posX="8.0" posY="13" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.ControlledRobot" posX="13.0" posY="8" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.ControlledRobot" posX="3.0" posY="8" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.AutonomousRobot" posX="92" posY="97" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.AutonomousRobot" posX="92" posY="87" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.AutonomousRobot" posX="87" posY="92" angle="180"/>
+		<robot class="com.khalev.efd.robots.competition.AutonomousRobot" posX="97" posY="92" angle="180"/>
+	</robots>
+	<ensembles>
+		<ensemble class="com.khalev.efd.robots.competition.OrderEnsemble"/>
+		<ensemble class="com.khalev.efd.robots.competition.CollectEnsemble"/>
+		<ensemble class="com.khalev.efd.robots.competition.ItemPositionSignal"/>
+		<ensemble class="com.khalev.efd.robots.competition.ScoreUpdate"/>
+		<ensemble class="com.khalev.efd.robots.competition.StatusUpdate"/>
+		<ensemble class="com.khalev.efd.robots.competition.ChargerPositionEnsemble"/>
+		<ensemble class="com.khalev.efd.robots.competition.HackEnsemble"/>
+	</ensembles>
+	<objects>
+		<object class="com.khalev.efd.robots.competition.CommandStation" posX="8" posY="8" size="12.0" tag="Power Station"/>
+		<object class="com.khalev.efd.robots.competition.PowerStation" posX="92" posY="92" size="12.0" tag="Power Station"/>
+		<object class="com.khalev.efd.robots.competition.Counter" posX="0" posY="0" size="0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+		<object class="com.khalev.efd.robots.competition.CollectibleItem" posX="55.0" posY="55" size="12.0" tag=""/>
+	</objects>
+</simulation>

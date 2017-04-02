@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="simulation">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="sensors" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="sensor" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="processor" type="xs:string" use="required"/>
+                                    <xs:attribute name="arg" type="xs:string" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="robots" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="robot" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:attribute name="class" type="xs:string" use="required"/>
+                                    <xs:attribute name="posX" type="xs:double" use="required"/>
+                                    <xs:attribute name="posY" type="xs:double" use="required"/>
+                                    <xs:attribute name="angle" type="xs:double" use="required"/>
+                                    <xs:attribute name="size" type="xs:double" use="optional"/>
+                                    <xs:attribute name="tag" type="xs:string" use="optional"/>
+                                    <xs:attribute name="arg" type="xs:string" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ensembles" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="ensemble" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:attribute name="class" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="objects" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="object" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:attribute name="class" type="xs:string" use="required"/>
+                                    <xs:attribute name="posX" type="xs:double" use="required"/>
+                                    <xs:attribute name="posY" type="xs:double" use="required"/>
+                                    <xs:attribute name="size" type="xs:double" use="required"/>
+                                    <xs:attribute name="tag" type="xs:string" use="optional"/>
+                                    <xs:attribute name="arg" type="xs:string" use="optional"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+            <xs:attribute name="cycles" type="xs:integer" use="required"/>
+            <xs:attribute name="logfile" type="xs:string" use="required"/>
+            <xs:attribute name="bitmap" type="xs:string" use="optional"/>
+            <xs:attribute name="sizeX" type="xs:integer" use="optional"/>
+            <xs:attribute name="sizeY" type="xs:integer" use="optional"/>
+            <xs:attribute name="processingTime" type="xs:integer" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
