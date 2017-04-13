@@ -6,6 +6,7 @@ import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ControlledRobot extends DEECoRobot{
@@ -18,14 +19,14 @@ public class ControlledRobot extends DEECoRobot{
     public Mode mode = Mode.IDLE;
     public RobotOrder order;
     public RobotOrder trajectoryOrder;
-    public ArrayList<Coordinates> trajectory = new ArrayList<>();
+    public List<Coordinates> trajectory = new ArrayList<>();
     static Integer nextID = 0;
     public Integer TMID = nextID++;
 
     public ControlledRobot() {
         wheels = new PoweredWheels();
-        sensor.registerSensor("coords", Coordinates.class);
-        sensor.registerSensor("energy", EnergyInput.class);
+        sensor.registerSensor("coords");
+        sensor.registerSensor("energy");
     }
 
     @Process
@@ -40,7 +41,7 @@ public class ControlledRobot extends DEECoRobot{
             @InOut("tag") ParamHolder<String> tag,
             @In("order") RobotOrder order,
             @InOut("trajectoryOrder") ParamHolder<RobotOrder> trajectoryOrder,
-            @InOut("trajectory") ParamHolder<ArrayList<Coordinates>> trajectory
+            @InOut("trajectory") ParamHolder<List<Coordinates>> trajectory
     ) {
         //Getting sensory data, preparing actuators
         CollisionData collisionData = sensor.getInputFromSensor("collisions", CollisionData.class);
@@ -65,7 +66,7 @@ public class ControlledRobot extends DEECoRobot{
     }
 
     private static void executeOrder(CollisionData collisionData, RobotOrder order, PoweredWheels pw, ParamHolder<Mode> mode,
-                                     Coordinates charger, Coordinates coordinates, ParamHolder<RobotOrder> trajectoryOrder, ParamHolder<ArrayList<Coordinates>> trajectory) {
+                                     Coordinates charger, Coordinates coordinates, ParamHolder<RobotOrder> trajectoryOrder, ParamHolder<List<Coordinates>> trajectory) {
 
         if (order.type != RobotOrder.Type.STAY && frontalCollisionDetected(collisionData)
                 && (mode.value != Mode.CHARGE || Geometry.distance(coordinates.x, coordinates.y, charger.x, charger.y) > 40)) {
@@ -100,8 +101,8 @@ public class ControlledRobot extends DEECoRobot{
         }
     }
 
-    private static ArrayList<Coordinates> constructAvoidanceTrajectory(Coordinates coordinates, CollisionData collisionData) {
-        ArrayList<Coordinates> trajectory = new ArrayList<>();
+    private static List<Coordinates> constructAvoidanceTrajectory(Coordinates coordinates, CollisionData collisionData) {
+        List<Coordinates> trajectory = new ArrayList<>();
         double collisionAngle = 0;
         for (double collision : collisionData.collisionPoints) {
             if (collision < Math.PI / 2 && collision > - Math.PI / 2) {

@@ -5,21 +5,30 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-class BitmapProcessor {
+/**
+ * Reads an image to produce an {@link EnvironmentMap} from it.
+ *
+ * @author Danylo Khalyeyev
+ */
+class BitmapReader {
 
-    BufferedImage img;
+    private BufferedImage img;
     private int sizeX;
     private int sizeY;
 
-    public BitmapProcessor(File bitmap) throws IOException {
+    BitmapReader(File bitmap) throws IOException {
         this.img = ImageIO.read(bitmap);
         this.sizeX = img.getWidth();
         this.sizeY = img.getHeight();
     }
 
-    public EnvironmentMap readBitmap() {
+    /**
+     * Reads a bitmap and constructs an {@link EnvironmentMap}.
+     * @return a created {@link EnvironmentMap}
+     */
+    EnvironmentMap readBitmap() {
         EnvironmentMap map = new EnvironmentMap(sizeX, sizeY);
-
+        //read an image and add a line wherever a black pixel occurs near a non-black pixel
         for (int y = -1; y <= sizeY; y++) {
             for (int x = -1; x <= sizeX; x++) {
                 if (isBlack(x, y)) {
@@ -34,7 +43,7 @@ class BitmapProcessor {
                 }
             }
         }
-
+        //merge lines where possible to reduce their count
         for (int i = 0; i < map.horizontal.length; i++) {
             for (int j = 0; j < map.horizontal[i].size(); j++) {
                 boolean b = true;
@@ -55,7 +64,6 @@ class BitmapProcessor {
                 }
             }
         }
-
         for (int i = 0; i < map.vertical.length; i++) {
             for (int j = 0; j < map.vertical[i].size(); j++) {
                 boolean b = true;
@@ -79,7 +87,31 @@ class BitmapProcessor {
         return map;
     }
 
-    public static EnvironmentMap createEmptyMap(int sizeX, int sizeY) {
+    /**
+     * Creates a boolean representation of the map of obstacles.
+     * @return a boolean representation of the map of obstacles
+     */
+    boolean[][] getBooleanRepresentation() {
+        boolean[][] map = new boolean[sizeX][sizeY];
+        for (int x = 0; x < sizeX; x++) {
+            for (int y = 0; y < sizeY; y++) {
+                if (isBlack(x, y)) {
+                    map[x][y] = true;
+                } else {
+                    map[x][y] = false;
+                }
+            }
+        }
+        return map;
+    }
+
+    /**
+     * Creates an empty map without obstacles, only with boundaries.
+     * @param sizeX width of created map
+     * @param sizeY height of created map
+     * @return an empty map without obstacles
+     */
+    static EnvironmentMap createEmptyMap(int sizeX, int sizeY) {
         EnvironmentMap map = new EnvironmentMap(sizeX, sizeY);
 
         map.horizontal[0].add(new Line(0, sizeX, 0, false));
@@ -90,6 +122,12 @@ class BitmapProcessor {
         return map;
     }
 
+    /**
+     * Tests whether a pixel is black.
+     * @param x X-coordinate of a pixel
+     * @param y Y-coordinate of a pixel
+     * @return true if a pixel is black or lies outside of the image, false otherwise
+     */
     private boolean isBlack(int x, int y) {
         if (x < 0 || y < 0 || x >= sizeX || y >= sizeY) {
             return true;
@@ -100,4 +138,5 @@ class BitmapProcessor {
         int blue = (rgb) & 0x000000FF;
         return red == 0 && green == 0 && blue == 0;
     }
+
 }

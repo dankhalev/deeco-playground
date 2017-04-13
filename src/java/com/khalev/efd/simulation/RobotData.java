@@ -1,5 +1,11 @@
 package com.khalev.efd.simulation;
 
+/**
+ * Represents data that {@link Coordinator} collects from each robot through {@link RobotEnsemble} and transmits to
+ * the {@link Environment}.
+ *
+ * @author Danylo Khalyeyev
+ */
 class RobotData {
 
     Action action;
@@ -9,4 +15,5 @@ class RobotData {
         this.action = action;
         this.tag = tag;
     }
+
 }

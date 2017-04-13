@@ -1,9 +1,14 @@
 package com.khalev.efd.visualization;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * Draws a map of physical obstacles on the screen.
+ *
+ * @author Danylo Khalyeyev
+ */
 class MapVisualizationLayer extends VisualizationLayer {
-
 
     private final Coloring coloring;
     private final EnvironmentMap map;
@@ -11,6 +16,14 @@ class MapVisualizationLayer extends VisualizationLayer {
     MapVisualizationLayer(Coloring mapColoring, EnvironmentMap map) {
         this.map = map;
         this.coloring = mapColoring;
+    }
+
+    @Override
+    protected void initialize(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+        super.initialize(shapeRenderer, spriteBatch);
+        if (coloring.type == Coloring.Type.TEXTURE) {
+            coloring.texture = loadTexture(coloring.texturePath);
+        }
     }
 
     @Override
@@ -39,4 +52,5 @@ class MapVisualizationLayer extends VisualizationLayer {
             spriteBatch.end();
         }
     }
+
 }

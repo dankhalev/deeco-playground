@@ -3,23 +3,39 @@ package com.khalev.efd.visualization;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Reads the body of a simulation logs file, decoding it cycle by cycle
+ *
+ * @author Danylo Khalyeyev
+ */
 class LogfileReader {
 
     private int cycle = -1;
-
     private BufferedReader logs;
-    private ArrayList<ComponentParameters> robotCoordinates = new ArrayList<ComponentParameters>();
-    private ArrayList<ComponentParameters> objectCoordinates = new ArrayList<>();
+    private List<ComponentParameters> robotCoordinates = new ArrayList<ComponentParameters>();
+    private List<ComponentParameters> objectCoordinates = new ArrayList<>();
     private String status = "";
 
-    LogfileReader(BufferedReader logs, ArrayList<ComponentParameters> robotCoordinates, ArrayList<ComponentParameters> objectCoordinates) {
+    /**
+     * @param logs a BufferedReader to read simulation logs from. The header of the logfile should be already read in
+     *             this reader.
+     * @param robotCoordinates list of {@link ComponentParameters} for robots
+     * @param objectCoordinates list of {@link ComponentParameters} for objects
+     */
+    LogfileReader(BufferedReader logs, List<ComponentParameters> robotCoordinates, List<ComponentParameters> objectCoordinates) {
         this.logs = logs;
         this.robotCoordinates = robotCoordinates;
         this.objectCoordinates = objectCoordinates;
     }
 
-    ArrayList<ComponentParameters> getRobots(int cycle) {
+    /**
+     * Returns a list of {@link ComponentParameters} for robots for a given cycle.
+     * @param cycle current cycle
+     * @return a list of {@link ComponentParameters} for robots for a given cycle
+     */
+    List<ComponentParameters> getRobots(int cycle) {
         if (cycle != this.cycle) {
             updateArrays();
         }
@@ -27,7 +43,12 @@ class LogfileReader {
         return robotCoordinates;
     }
 
-    ArrayList<ComponentParameters> getObjects(int cycle) {
+    /**
+     * Returns a list of {@link ComponentParameters} for objects for a given cycle.
+     * @param cycle current cycle
+     * @return a list of {@link ComponentParameters} for objects for a given cycle
+     */
+    List<ComponentParameters> getObjects(int cycle) {
         if (cycle != this.cycle) {
             updateArrays();
         }
@@ -35,53 +56,72 @@ class LogfileReader {
         return objectCoordinates;
     }
 
+    /**
+     * Returns a status string for a cycle that is currently being visualized.
+     * @return a status string for a cycle that is currently being visualized
+     */
+    String getStatus() {
+        return status;
+    }
+
+    /**
+     * Reads the data for the next cycle from simulation logs; updates lists of {@link ComponentParameters} for robots
+     * and objects.
+     * @throws RuntimeException if simulation logs file contains mistakes or if IOException occurs during reading
+     * simulation logs file
+     */
     private void updateArrays() {
         int ZOOM = Visualizer.getZoom();
         try {
-            String s;
-            if ((s = logs.readLine()) != null) {
-                String[] ss = s.split("&&", -1);
-                String[] robots, objects;
-                if (ss.length != 3) {
+            String wholeLine  = logs.readLine();
+            if (wholeLine != null) {
+                //divide the line to its 3 main parts (status, robots, objects)
+                String[] dividedLine = wholeLine.split("&&", -1);
+                if (dividedLine.length != 3) {
                     throw new RuntimeException("Simulation logs file is not correct");
                 }
-                status = unprefixString(ss[0]);
-                if (ss[1].contains(";;")) {
-                    robots = ss[1].split(";;", 0);
-                } else if (ss[1].isEmpty()) {
+
+                status = unprefixString(dividedLine[0]);
+                //divide lists of robots and objects to access individual components
+                String[] robots, objects;
+                if (dividedLine[1].contains(";;")) {
+                    robots = dividedLine[1].split(";;", 0);
+                } else if (dividedLine[1].isEmpty()) {
                     robots = new String[0];
                 } else {
                     throw new RuntimeException("Simulation logs file is not correct");
                 }
-                if (ss[2].contains(";;")) {
-                    objects = ss[2].split(";;", 0);
-                } else if (ss[2].isEmpty()) {
+
+                if (dividedLine[2].contains(";;")) {
+                    objects = dividedLine[2].split(";;", 0);
+                } else if (dividedLine[2].isEmpty()) {
                     objects = new String[0];
                 } else {
                     throw new RuntimeException("Simulation logs file is not correct");
                 }
+                //go through lists of robots and objects and parse them individually
                 try {
                     for (int i = 0; i < robots.length; i++) {
-                        String[] sss = robots[i].split(",,", -1);
-                        if (sss.length != 4) {
+                        String[] robotString = robots[i].split(",,", -1);
+                        if (robotString.length != 4) {
                             throw new RuntimeException("Simulation logs file is not correct");
                         }
                         ComponentParameters r = robotCoordinates.get(i);
-                        r.x = (float) Double.parseDouble(sss[0]) * ZOOM;
-                        r.y = (float) Double.parseDouble(sss[1]) * ZOOM;
-                        r.angle = (float) Math.toDegrees(Double.parseDouble(sss[2]));
-                        r.tag = unprefixString(sss[3]);
+                        r.x = (float) Double.parseDouble(robotString[0]) * ZOOM;
+                        r.y = (float) Double.parseDouble(robotString[1]) * ZOOM;
+                        r.angle = (float) Math.toDegrees(Double.parseDouble(robotString[2]));
+                        r.tag = unprefixString(robotString[3]);
                     }
                     for (int i = 0; i < objects.length; i++) {
-                        String[] sss = objects[i].split(",,", -1);
-                        if (sss.length != 4) {
+                        String[] objectString = objects[i].split(",,", -1);
+                        if (objectString.length != 4) {
                             throw new RuntimeException("Simulation logs file is not correct");
                         }
                         ComponentParameters o = objectCoordinates.get(i);
-                        o.x = (float) Double.parseDouble(sss[0]) * ZOOM;
-                        o.y = (float) Double.parseDouble(sss[1]) * ZOOM;
-                        o.size = (float) Double.parseDouble(sss[2]) * ZOOM;
-                        o.tag = unprefixString(sss[3]);
+                        o.x = (float) Double.parseDouble(objectString[0]) * ZOOM;
+                        o.y = (float) Double.parseDouble(objectString[1]) * ZOOM;
+                        o.size = (float) Double.parseDouble(objectString[2]) * ZOOM;
+                        o.tag = unprefixString(objectString[3]);
                     }
                 } catch (NumberFormatException ex) {
                     throw new RuntimeException("Simulation logs file is not correct", ex);
@@ -93,6 +133,11 @@ class LogfileReader {
         }
     }
 
+    /**
+     * Removes '\' prefixes from special characters used in simulation logs.
+     * @param s string to unprefix
+     * @return unprefixed string
+     */
     private String unprefixString(String s) {
         char[] array = s.toCharArray();
         StringBuilder builder = new StringBuilder("");
@@ -107,7 +152,4 @@ class LogfileReader {
         return builder.toString();
     }
 
-    String getStatus() {
-        return status;
-    }
 }

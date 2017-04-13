@@ -1,24 +1,25 @@
 package com.khalev.efd.simulation;
 
 /**
- * Represents position of a robot in the Environment. Can be used by input processors to access robot's parameters.
+ * Represents a position of a robot in the Environment. Can be used by input processors to access robot's parameters.
+ *
+ * @author Danylo Khalyeyev
  */
 public class RobotPlacement {
 
     DEECoRobot robot;
-
     Double x;
     Double y;
     Double angle;
+    final int id;
     final Double size;
     final Double sizeSquared;
     String tag;
+
     /**
      * Action that was taken by this robot in current cycle.
      */
     public Action currentAction = new Action(0,0);
-    final int id;
-
 
     RobotPlacement(DEECoRobot robot, Double x, Double y, Double angle, Double size, String tag) {
         this.robot = robot;

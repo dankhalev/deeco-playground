@@ -4,6 +4,7 @@ import com.khalev.efd.simulation.Action;
 import com.khalev.efd.simulation.Wheels;
 
 public class SimpleWheels implements Wheels {
+
     private static final double MAX_SPEED = 1.0;
     public double rotationAngle = 0.0;
     public double speed = 1.0;
@@ -21,5 +22,6 @@ public class SimpleWheels implements Wheels {
         this.speed = speed;
         this.rotationAngle = angle;
     }
+
 }
 

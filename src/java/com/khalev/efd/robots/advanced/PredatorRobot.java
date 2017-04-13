@@ -8,18 +8,18 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class PredatorRobot extends DEECoRobot {
 
     public Coordinates target = new Coordinates(0,0,0);
     public Coordinates position = new Coordinates(0,0,0);
-
-    public ArrayList<Double> array = new ArrayList<>();
+    public List<Double> array = new ArrayList<>();
 
     public PredatorRobot() {
         wheels = new SimpleWheels();
-        sensor.registerSensor("coords", Coordinates.class);
+        sensor.registerSensor("coords");
         Double[] arr = new Double[] {
                 7.984093553752103,
                 1.4786804015530786,
@@ -48,7 +48,7 @@ public class PredatorRobot extends DEECoRobot {
             @In("sensor") SensorySystem sensor,
             @InOut("target") ParamHolder<Coordinates> target,
             @InOut("position") ParamHolder<Coordinates> position,
-            @InOut("array") ParamHolder<ArrayList<Double>> array
+            @InOut("array") ParamHolder<List<Double>> array
     ) {
         SimpleWheels sWheels = (SimpleWheels) wheels.value;
         CollisionData collisionData = sensor.getInputFromSensor("collisions", CollisionData.class);
@@ -71,7 +71,7 @@ public class PredatorRobot extends DEECoRobot {
         wheels.speed = 0.0;
     }
 
-    private static Coordinates setNewTarget(ArrayList<Double> array) {
+    private static Coordinates setNewTarget(List<Double> array) {
         //double x = Math.random() * 100;
         //double y = Math.random() * 100;
         double x = array.remove(0);

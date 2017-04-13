@@ -2,52 +2,55 @@ package com.khalev.efd.simulation;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
- * Representation of the map of the environment. Map is represented as a list of horizontal and vertical line segments.
- * Those segments can have only integer coordinates because the map is given by a bitmap image with discrete pixels. A
- * robot can never cross any of those lines as they represent physical walls.
+ * Representation of the map of physical obstacles in the environment. Map is represented as a list of horizontal and
+ * vertical line segments. Those segments can have only integer coordinates because the map is given by a bitmap image
+ * with discrete pixels. A robot can never cross any of those lines as they represent physical walls.
+ *
+ * @author Danylo Khalyeyev
  */
 public class EnvironmentMap {
 
-    ArrayList<Line>[] vertical;
-    ArrayList<Line>[] horizontal;
+    List<Line>[] vertical;
+    List<Line>[] horizontal;
     int sizeX;
     int sizeY;
 
     /**
-     * @return A list of all vertical lines with X-coordinate at i.
+     * Returns an unmodifiable list of all vertical lines with X-coordinate at i.
+     * @param i X-coordinate of walls in the list
+     * @return an unmodifiable list of all vertical lines with X-coordinate at i.
      */
-    public ArrayList<Line> getVerticalLines(int i) {
-        ArrayList<Line> list = new ArrayList<>();
-        Collections.copy(vertical[i], list);
-        return list;
+    public List<Line> getVerticalLines(int i) {
+        return Collections.unmodifiableList(vertical[i]);
     }
 
     /**
-     * @return A list of all horizontal lines with Y-coordinate at i.
+     * Returns an unmodifiable list of all horizontal lines with Y-coordinate at i.
+     * @param i Y-coordinate of walls in the list
+     * @return an unmodifiable list of all horizontal lines with Y-coordinate at i.
      */
-    public ArrayList<Line> getHorizontalLines(int i) {
-        ArrayList<Line> list = new ArrayList<>();
-        Collections.copy(horizontal[i], list);
-        return list;
+    public List<Line> getHorizontalLines(int i) {
+        return Collections.unmodifiableList(horizontal[i]);
     }
 
     /**
-     * @return Width of the map as it was specified in simulation parameters.
+     * Returns a width of the map as it was specified in a scenario file.
+     * @return width of the map as it was specified in a scenario file.
      */
     public int getSizeX() {
         return sizeX;
     }
 
     /**
-     * @return Height of the map as it was specified in simulation parameters.
+     * Returns a height of the map as it was specified in a scenario file.
+     * @return height of the map as it was specified in a scenario file.
      */
     public int getSizeY() {
         return sizeY;
     }
-
-
 
     @SuppressWarnings("unchecked")
     EnvironmentMap(int sizeX, int sizeY) {
@@ -63,4 +66,5 @@ public class EnvironmentMap {
         }
 
     }
+
 }

@@ -5,6 +5,7 @@ import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Ensemble
 @PeriodicScheduling(period = 1)
@@ -12,7 +13,7 @@ public class ItemPositionSignal {
 
     @Membership
     public static boolean membership(
-            @In("coord.items") HashMap<Integer, Coordinates> items,
+            @In("coord.items") Map<Integer, Coordinates> items,
             @In("member.found") Boolean found,
             @In("member.size") Double size,
             @In("member.itemID") Integer id
@@ -24,7 +25,7 @@ public class ItemPositionSignal {
     public static void map(
             @In("member.found") Boolean found,
             @In("member.size") Double size,
-            @InOut("coord.items") ParamHolder<HashMap<Integer, Coordinates>> items,
+            @InOut("coord.items") ParamHolder<Map<Integer, Coordinates>> items,
             @In("member.position") Coordinates position,
             @In("member.itemID") Integer id
     ) {

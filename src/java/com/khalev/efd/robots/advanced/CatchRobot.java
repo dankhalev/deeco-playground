@@ -15,7 +15,7 @@ public class CatchRobot extends DEECoRobot {
 
     public CatchRobot() {
         wheels = new SimpleWheels();
-        sensor.registerSensor("coords", Coordinates.class);
+        sensor.registerSensor("coords");
     }
 
     @Process

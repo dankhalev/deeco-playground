@@ -1,13 +1,28 @@
 package com.khalev.efd.visualization;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ * Fills the visualization window with a specified color or draws a specified texture stretching it to the size of the
+ * window.
+ *
+ * @author Danylo Khalyeyev
+ */
 class BackgroundVisualizationLayer extends VisualizationLayer {
 
     private Coloring coloring;
 
     BackgroundVisualizationLayer(Coloring background) {
         this.coloring = background;
+    }
+
+    @Override
+    protected void initialize(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
+        super.initialize(shapeRenderer, spriteBatch);
+        if (coloring.type == Coloring.Type.TEXTURE) {
+            coloring.texture = loadTexture(coloring.texturePath);
+        }
     }
 
     @Override
@@ -23,4 +38,5 @@ class BackgroundVisualizationLayer extends VisualizationLayer {
             spriteBatch.end();
         }
     }
+
 }

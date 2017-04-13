@@ -4,8 +4,7 @@ import com.khalev.efd.simulation.Coordinates;
 import com.khalev.efd.simulation.SensorySystem;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
-
-import java.util.HashMap;
+import java.util.Map;
 
 @Ensemble
 @PeriodicScheduling(period = 1)
@@ -13,7 +12,7 @@ public class DataAggregationAndOrderDistribution {
 
     @Membership
     public static boolean membership(
-            @In("coord.teamPlacements") HashMap<Integer, FirefighterData> teamPlacements,
+            @In("coord.teamPlacements") Map<Integer, FirefighterData> teamPlacements,
             @In("coord.firefighterID") Integer cID,
             @In("member.firefighterID") Integer fID
     ) {
@@ -22,8 +21,8 @@ public class DataAggregationAndOrderDistribution {
 
     @KnowledgeExchange
     public static void map(
-            @InOut("coord.teamPlacements") ParamHolder<HashMap<Integer, FirefighterData>> teamPlacements,
-            @In("coord.teamOrders") HashMap<Integer, FirefighterOrder> teamOrders,
+            @InOut("coord.teamPlacements") ParamHolder<Map<Integer, FirefighterData>> teamPlacements,
+            @In("coord.teamOrders") Map<Integer, FirefighterOrder> teamOrders,
             @InOut("member.order") ParamHolder<FirefighterOrder> order,
             @In("member.firefighterID") Integer fID,
             @In("member.sensor") SensorySystem sensor,

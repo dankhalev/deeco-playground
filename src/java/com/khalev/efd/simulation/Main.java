@@ -4,7 +4,9 @@ import cz.cuni.mff.d3s.deeco.annotations.processor.AnnotationProcessorException;
 import cz.cuni.mff.d3s.deeco.runtime.DEECoException;
 
 /**
- * Main class of the program. Requires to receive a simulation properties file as its 1st parameter.
+ * This class contains a main() method that runs a simulation. It requires to receive a scenario file as its 1st parameter.
+ *
+ * @author Danylo Khalyeyev
  */
 public class Main {
 

@@ -16,7 +16,7 @@ public class PreyRobot extends DEECoRobot {
 
     public PreyRobot() {
         wheels = new SimpleWheels();
-        sensor.registerSensor("coords", Coordinates.class);
+        sensor.registerSensor("coords");
     }
 
     @Process
@@ -74,4 +74,5 @@ public class PreyRobot extends DEECoRobot {
     private static boolean collision(CollisionData collisionData) {
         return collisionData != null && collisionData.collisionPoints.size() > 0;
     }
+
 }

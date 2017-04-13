@@ -83,7 +83,7 @@
   
   <target name="doc" description="Generates javadoc documentation">
     <mkdir dir="${javadoc.dir}" />
-    <javadoc sourcepathref="sourcepath" destdir="${javadoc.dir}" Encoding="utf-8" classpathref="libraries"/>
+    <javadoc access="private" sourcepathref="sourcepath" destdir="${javadoc.dir}" Encoding="utf-8" classpathref="libraries"/>
   </target>
 
   <!-- Run -->
@@ -106,7 +106,7 @@
   </path>
 
   <target name="run.visualization" depends="compile.all" description="Executes visualization">
-    <java fork="true" classname="com.khalev.efd.visualization.DesktopLauncher">
+    <java fork="true" classname="com.khalev.efd.visualization.Main">
       <arg line="${args}"/>
       <classpath refid="visualization.classpath"/>
     </java>

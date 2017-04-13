@@ -3,9 +3,12 @@ package com.khalev.efd.simulation;
 import java.util.Objects;
 
 /**
- * Represents coordinates of an object (or robot) in the environment: X-coordinate, Y-coordinate and rotation angle
+ * Represents coordinates of an object (or a robot) in the environment.
+ *
+ * @author Danylo Khalyeyev
  */
 public class Coordinates {
+
     public double x, y, angle;
 
     public Coordinates(double x, double y, double angle) {

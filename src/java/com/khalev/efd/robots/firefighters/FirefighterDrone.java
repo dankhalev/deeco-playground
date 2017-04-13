@@ -6,6 +6,7 @@ import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class FirefighterDrone extends DEECoRobot {
@@ -17,14 +18,14 @@ public class FirefighterDrone extends DEECoRobot {
     public Boolean autonomous = true;
     public FirefighterOrder order;
     public FirefighterOrder trajectoryOrder;
-    public ArrayList<Coordinates> trajectory = new ArrayList<>();
+    public List<Coordinates> trajectory = new ArrayList<>();
     static Integer nextID = 0;
     public Integer firefighterID = nextID++;
 
     public FirefighterDrone() {
         wheels = new FirefighterWheels();
-        sensor.registerSensor("coords", Coordinates.class);
-        sensor.registerSensor("energy", EnergyInput.class);
+        sensor.registerSensor("coords");
+        sensor.registerSensor("energy");
     }
 
     @Process
@@ -40,7 +41,7 @@ public class FirefighterDrone extends DEECoRobot {
             @In("autonomous") Boolean autonomous,
             @In("order") FirefighterOrder order,
             @InOut("trajectoryOrder") ParamHolder<FirefighterOrder> trajectoryOrder,
-            @InOut("trajectory") ParamHolder<ArrayList<Coordinates>> trajectory
+            @InOut("trajectory") ParamHolder<List<Coordinates>> trajectory
     ) {
         //Getting sensory data, preparing actuators
         CollisionData collisionData = sensor.getInputFromSensor("collisions", CollisionData.class);
@@ -80,7 +81,7 @@ public class FirefighterDrone extends DEECoRobot {
     }
 
     private static void executeOrder(CollisionData collisionData, FirefighterOrder order, FirefighterWheels pw, ParamHolder<Mode> mode,
-                                     Coordinates charger, Coordinates coordinates, ParamHolder<FirefighterOrder> trajectoryOrder, ParamHolder<ArrayList<Coordinates>> trajectory) {
+                                     Coordinates charger, Coordinates coordinates, ParamHolder<FirefighterOrder> trajectoryOrder, ParamHolder<List<Coordinates>> trajectory) {
 
         if (order.type != FirefighterOrder.Type.STAY && frontalCollisionDetected(collisionData)
                 && (mode.value != Mode.CHARGE || Geometry.distance(coordinates.x, coordinates.y, charger.x, charger.y) > 40)) {
@@ -122,8 +123,8 @@ public class FirefighterDrone extends DEECoRobot {
         }
     }
 
-    private static ArrayList<Coordinates> constructAvoidanceTrajectory(Coordinates coordinates, CollisionData collisionData) {
-        ArrayList<Coordinates> trajectory = new ArrayList<>();
+    private static List<Coordinates> constructAvoidanceTrajectory(Coordinates coordinates, CollisionData collisionData) {
+        List<Coordinates> trajectory = new ArrayList<>();
         double angle1 = Geometry.normalizeAngle(coordinates.angle + Math.PI);
         double x1 = coordinates.x + 6 * Math.sin(angle1);
         double y1 = coordinates.y + 6 * Math.cos(angle1);
@@ -161,7 +162,7 @@ public class FirefighterDrone extends DEECoRobot {
     }
 
     public static void makeAutonomousDecision(CollisionData collisionData, EnergyInput energy, Coordinates coordinates,
-                                              FirefighterWheels pw, ParamHolder<Mode> mode, ParamHolder<ArrayList<Coordinates>> trajectory) {
+                                              FirefighterWheels pw, ParamHolder<Mode> mode, ParamHolder<List<Coordinates>> trajectory) {
 
 
         if (mode.value == Mode.AVOID) {

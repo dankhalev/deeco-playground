@@ -1,12 +1,14 @@
 package com.khalev.efd.simulation;
 
 /**
- * Represents position of an object in the Environment. Can be used by input processors to access object's parameters.
+ * A position of an object in the Environment. Can be used by {@link SensoryInputsProcessor}s to access object's
+ * parameters.
+ *
+ * @author Danylo Khalyeyev
  */
 public class ObjectPlacement {
 
     DEECoObject object;
-
     Double x;
     Double y;
     Double size;
@@ -23,6 +25,7 @@ public class ObjectPlacement {
     }
 
     /**
+     * Returns an X-coordinate of the object.
      * @return X-coordinate of the object.
      */
     public double getX() {
@@ -30,6 +33,7 @@ public class ObjectPlacement {
     }
 
     /**
+     * Returns a Y-coordinate of the object.
      * @return Y-coordinate of the object.
      */
     public double getY() {
@@ -37,23 +41,27 @@ public class ObjectPlacement {
     }
 
     /**
-     * @return Size of the object. Size is distance from the center of the object to its edge.
+     * Returns a size of the object. Size is the distance from the center of the object to its edge.
+     * @return size of the object
      */
     public double getSize() {
         return size;
     }
 
     /**
-     * @return Tag string attached to the object.
+     * Returns a tag string attached to the object.
+     * @return tag string attached to the object.
      */
     public String getTag() {
         return tag;
     }
 
     /**
-     * @return Object's class name.
+     * Returns the object's class name.
+     * @return object's class name.
      */
     public String getObjectType() {
         return object.getClass().getName();
     }
+
 }

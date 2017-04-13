@@ -10,11 +10,12 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class SpawningObject extends DEECoObject {
 
-    public ArrayList<Double> array = new ArrayList<>();
+    public List<Double> array = new ArrayList<>();
 
     public SpawningObject() {
         super();
@@ -46,7 +47,7 @@ public class SpawningObject extends DEECoObject {
             @InOut("found") ParamHolder<Boolean> found,
             @InOut("spawns") ParamHolder<Integer> spawns,
             @InOut("position") ParamHolder<Coordinates> position,
-            @InOut("array") ParamHolder<ArrayList<Double>> array
+            @InOut("array") ParamHolder<List<Double>> array
     ) {
         if (found.value) {
             //double x = Math.random() * 100;

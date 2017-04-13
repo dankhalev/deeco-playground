@@ -5,6 +5,7 @@ import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Ensemble
 @PeriodicScheduling(period = 1)
@@ -12,8 +13,8 @@ public class StatusUpdate {
 
     @Membership
     public static boolean membership(
-            @In("coord.team1") HashMap<Integer, Integer> team1,
-            @In("coord.team2") HashMap<Integer, Integer> team2,
+            @In("coord.team1") Map<Integer, Integer> team1,
+            @In("coord.team2") Map<Integer, Integer> team2,
             @In("member.phase") Coordinator.Phase phase,
             @In("member.status") String status,
             @In("member.cycle") Integer cycle
@@ -23,8 +24,8 @@ public class StatusUpdate {
 
     @KnowledgeExchange
     public static void map(
-            @In("coord.team1") HashMap<Integer, Integer> team1,
-            @In("coord.team2") HashMap<Integer, Integer> team2,
+            @In("coord.team1") Map<Integer, Integer> team1,
+            @In("coord.team2") Map<Integer, Integer> team2,
             @InOut("member.status") ParamHolder<String> status,
             @In("member.cycle") Integer cycle
     ) {

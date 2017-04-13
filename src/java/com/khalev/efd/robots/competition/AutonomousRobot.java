@@ -5,9 +5,7 @@ import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class AutonomousRobot extends DEECoRobot {
@@ -20,10 +18,10 @@ public class AutonomousRobot extends DEECoRobot {
     public Mode mode = Mode.IDLE;
     public RobotOrder order;
     public RobotOrder trajectoryOrder;
-    public ArrayList<Coordinates> trajectory = new ArrayList<>();
-    public HashMap<Integer, Coordinates> items = new HashMap<>();
-    public HashMap<Integer, RobotOrder> enemyOrders = new HashMap<>();
-    public HashMap<Integer, RobotData> enemyPlacements = new HashMap<>();
+    public List<Coordinates> trajectory = new ArrayList<>();
+    public Map<Integer, Coordinates> items = new HashMap<>();
+    public Map<Integer, RobotOrder> enemyOrders = new HashMap<>();
+    public Map<Integer, RobotData> enemyPlacements = new HashMap<>();
 
 
     public static final int criticalCharge = 80;
@@ -31,18 +29,18 @@ public class AutonomousRobot extends DEECoRobot {
 
     public AutonomousRobot() {
         wheels = new PoweredWheels();
-        sensor.registerSensor("coords", Coordinates.class);
-        sensor.registerSensor("energy", EnergyInput.class);
+        sensor.registerSensor("coords");
+        sensor.registerSensor("energy");
     }
 
     @Process
     @PeriodicScheduling(period = 1)
     public static void assigning(
-            @In("items") HashMap<Integer, Coordinates> items,
+            @In("items") Map<Integer, Coordinates> items,
             @In("sensor") SensorySystem sensor,
             @InOut("order")ParamHolder<RobotOrder> order,
-            @In("enemyOrders") HashMap<Integer, RobotOrder> enemyOrders,
-            @In("enemyPlacements") HashMap<Integer, RobotData> enemyPlacements
+            @In("enemyOrders") Map<Integer, RobotOrder> enemyOrders,
+            @In("enemyPlacements") Map<Integer, RobotData> enemyPlacements
     ) {
         Coordinates coordinates = sensor.getInputFromSensor("coords", Coordinates.class);
         EnergyInput energy = sensor.getInputFromSensor("energy", EnergyInput.class);
@@ -76,8 +74,8 @@ public class AutonomousRobot extends DEECoRobot {
         }
     }
 
-    private static boolean enemyIsCloser(Coordinates item, double distance, HashMap<Integer, RobotOrder> enemyOrders,
-                                         HashMap<Integer, RobotData> enemyPlacements) {
+    private static boolean enemyIsCloser(Coordinates item, double distance, Map<Integer, RobotOrder> enemyOrders,
+                                         Map<Integer, RobotData> enemyPlacements) {
         Set<Integer> enemies = enemyOrders.keySet();
         for (int enemy : enemies) {
             RobotOrder order = enemyOrders.get(enemy);
@@ -107,7 +105,7 @@ public class AutonomousRobot extends DEECoRobot {
             @InOut("tag") ParamHolder<String> tag,
             @In("order") RobotOrder order,
             @InOut("trajectoryOrder") ParamHolder<RobotOrder> trajectoryOrder,
-            @InOut("trajectory") ParamHolder<ArrayList<Coordinates>> trajectory
+            @InOut("trajectory") ParamHolder<List<Coordinates>> trajectory
     ) {
         //Getting sensory data, preparing actuators
         CollisionData collisionData = sensor.getInputFromSensor("collisions", CollisionData.class);
@@ -132,7 +130,7 @@ public class AutonomousRobot extends DEECoRobot {
     }
 
     private static void executeOrder(CollisionData collisionData, RobotOrder order, PoweredWheels pw, ParamHolder<Mode> mode,
-                                     Coordinates charger, Coordinates coordinates, ParamHolder<RobotOrder> trajectoryOrder, ParamHolder<ArrayList<Coordinates>> trajectory) {
+                                     Coordinates charger, Coordinates coordinates, ParamHolder<RobotOrder> trajectoryOrder, ParamHolder<List<Coordinates>> trajectory) {
 
         if (order.type != RobotOrder.Type.STAY && frontalCollisionDetected(collisionData)
                 && (mode.value != Mode.CHARGE || Geometry.distance(coordinates.x, coordinates.y, charger.x, charger.y) > 40)) {
@@ -167,8 +165,8 @@ public class AutonomousRobot extends DEECoRobot {
         }
     }
 
-    private static ArrayList<Coordinates> constructAvoidanceTrajectory(Coordinates coordinates, CollisionData collisionData) {
-        ArrayList<Coordinates> trajectory = new ArrayList<>();
+    private static List<Coordinates> constructAvoidanceTrajectory(Coordinates coordinates, CollisionData collisionData) {
+        List<Coordinates> trajectory = new ArrayList<>();
         double collisionAngle = 0;
         for (double collision : collisionData.collisionPoints) {
             if (collision < Math.PI / 2 && collision > - Math.PI / 2) {

@@ -23,4 +23,5 @@ public class GameOverEnsemble {
     ) {
         endSignal.value = spawns >= 15;
     }
+
 }

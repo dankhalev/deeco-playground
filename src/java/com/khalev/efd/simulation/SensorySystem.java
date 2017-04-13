@@ -1,56 +1,55 @@
 package com.khalev.efd.simulation;
 
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Provides access to all the sensors that are present on the robot. Initially contains only collision sensor, additional
- * sensors should be registered in robot's code. Each sensor is identified by its name and type of its input.
+ * Provides access to all the sensors that are present on the robot. Each sensor is identified by its name. Initially
+ * contains only collision sensor with a name "collisions", additional sensors should be registered in robot's code.
+ *
+ * @author Danylo Khalyeyev
  */
-public class SensorySystem {
+public final class SensorySystem {
 
-    private HashMap<String, Sensor> sensors = new HashMap<>();
+    private Set<String> sensors = new HashSet<>();
+    private int rID;
 
-    void receiveInput(String name, Object input) {
-        Sensor sensor = sensors.get(name);
-        if (sensor != null) {
-            sensor.receiveInput(input);
-        }
+    SensorySystem(int rID) {
+        this.rID = rID;
     }
 
     /**
-     * Accesses a specified sensor and returns its input value
+     * Accesses a specified sensor and returns its input value. If there is no sensor type with this name in simulation
+     * or if the sensor of this type is not registered or if a value on its input does not have an expected type, returns
+     * null.
      * @param name name of the sensor
      * @param cls expected class of value on input of this sensor
+     * @param <T> type of return value
      * @return if the sensor with this name exists and if a type of its input value is cls than value on input, else null
      */
     public <T> T getInputFromSensor(String name, Class<T> cls) {
-        Sensor sensor = sensors.get(name);
-        if (sensor == null) {
-            return null;
-        }
-        Object o = sensor.getInput();
-        if (o != null && o.getClass().isAssignableFrom(cls)) {
-            @SuppressWarnings("unchecked")
-            T t = (T) o;
-            return t;
+        if (sensors.contains(name)) {
+            return Environment.getInstance().getInputFromSensor(rID, name, cls);
         } else {
             return null;
         }
     }
 
     /**
-     * Creates a new sensor on robot. If a sensor with specified name already exists, replaces it.
-     * @param name Name of added sensor.
-     * @param cls Type of input value of the sensor. If null, sensor with that name will be removed (if present)
+     * Adds a new sensor to robot.
+     * @param name name of added sensor.
      */
-    public <T> void registerSensor(String name, Class<T> cls) {
-        if (cls != null) {
-            sensors.put(name, new Sensor<>(cls));
-        } else {
-            sensors.remove(name);
-        }
+    public void registerSensor(String name) {
+            sensors.add(name);
+    }
+
+    /**
+     * Removes a sensor from robot.
+     * @param name name of sensor to be removed.
+     */
+    public void unregisterSensor(String name) {
+        sensors.remove(name);
     }
 
 }
-
 

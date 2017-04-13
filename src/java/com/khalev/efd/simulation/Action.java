@@ -3,7 +3,10 @@ package com.khalev.efd.simulation;
 import java.util.Objects;
 
 /**
- * This class represents an action that a robot can perform in a cycle of simulation.
+ * This class represents an action that a robot can perform in a cycle of simulation. Each action consists of two
+ * components: speed and rotation angle.
+ *
+ * @author Danylo Khalyeyev
  */
 public class Action {
 
@@ -13,23 +16,26 @@ public class Action {
     public static final double MAX_SPEED = 1.0;
 
     /**
-     * Type of action: move, rotate, stay, rotate_and_move
+     * Type of action: STAY, MOVE, ROTATE, ROTATE_AND_MOVE
      */
     public final Type type;
 
-
     public final double speed;
+
     public final double angle;
 
     /**
      * Can have values from 0.0 to 1.0. Represents a fraction of action that was performed. If less than 1.0, collision
-     * has happened. For STAY and ROTATE types of action always equals 0.0.
+     * has happened. For STAY and ROTATE types of action always equals 0.0, even though those actions are always fully
+     * performed.
      */
     public double degreeOfRealization;
 
     /**
      * Creates new Action for specified speed and rotation angle. Action's type is determined from those values.
-     * @param speed Speed in units per cycle. Cannot be less than 0.0 or more than {@value #MAX_SPEED}.
+     * @param speed Speed in units per cycle. Cannot be less than 0.0 or more than {@value #MAX_SPEED}. In case when
+     *              this constructor receives a value outside of those boundaries, it is automatically reduced/increased
+     *              to the boundary.
      * @param rotation Rotation angle in radians
      */
     public Action(double speed, double rotation) {

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TemperatureMap {
 
@@ -18,7 +19,7 @@ public class TemperatureMap {
     int generatorDecrease = 2;
     int threshold = 40;
     int coolingValue = 20;
-    ArrayList<Coordinates> seeds = new ArrayList<>();
+    List<Coordinates> seeds = new ArrayList<>();
 
     public TemperatureMap(String file) {
         try {
@@ -36,7 +37,7 @@ public class TemperatureMap {
         }
     }
 
-    void cycle(ArrayList<Coordinates> coolers) {
+    void cycle(List<Coordinates> coolers) {
         int[][] valueBuffer = new int[size][size];
         //Smoothing & Cooling
         for ( int i = 0; i < size; i++ ) {
@@ -92,8 +93,8 @@ public class TemperatureMap {
         }
     }
 
-    public ArrayList<TemperatureData> getTemperatureData(ArrayList<RobotPlacement> robots) {
-        ArrayList<TemperatureData> temperatures = new ArrayList<>();
+    public List<TemperatureData> getTemperatureData(List<RobotPlacement> robots) {
+        List<TemperatureData> temperatures = new ArrayList<>();
         for (RobotPlacement r : robots) {
             int robotX = (int)r.getX();
             int robotY = (int)r.getY();
@@ -118,7 +119,7 @@ public class TemperatureMap {
         return temperatures;
     }
 
-    private void applyCoolers(ArrayList<Coordinates> coolers) {
+    private void applyCoolers(List<Coordinates> coolers) {
         for (Coordinates c : coolers) {
             int x = (int)c.x;
             int y = (int)c.y;

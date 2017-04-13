@@ -7,18 +7,15 @@ import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class CommandStation extends DEECoObject {
 
     public String teamID = "T1";
-    public HashMap<Integer, RobotOrder> teamOrders = new HashMap<>();
-    public HashMap<Integer, RobotData> teamPlacements = new HashMap<>();
-    public HashMap<Integer, Coordinates> items = new HashMap<>();
+    public Map<Integer, RobotOrder> teamOrders = new HashMap<>();
+    public Map<Integer, RobotData> teamPlacements = new HashMap<>();
+    public Map<Integer, Coordinates> items = new HashMap<>();
 
     public static final int criticalCharge = 80;
     public static final int fullCharge = 300;
@@ -26,12 +23,12 @@ public class CommandStation extends DEECoObject {
     @Process
     @PeriodicScheduling(period = 1)
     public static void assigning(
-            @InOut("teamOrders") ParamHolder<HashMap<Integer, RobotOrder>> teamOrders,
-            @InOut("teamPlacements") ParamHolder<HashMap<Integer, RobotData>> teamPlacements,
-            @In("items") HashMap<Integer, Coordinates> items
+            @InOut("teamOrders") ParamHolder<Map<Integer, RobotOrder>> teamOrders,
+            @InOut("teamPlacements") ParamHolder<Map<Integer, RobotData>> teamPlacements,
+            @In("items") Map<Integer, Coordinates> items
     ) {
 
-        ArrayList<PossibleAssignment> assignments = new ArrayList<>();
+        List<PossibleAssignment> assignments = new ArrayList<>();
         Set<Integer> teammateKeys = teamPlacements.value.keySet();
         Set<Integer> itemKeys = items.keySet();
 

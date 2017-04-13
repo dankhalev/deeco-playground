@@ -4,10 +4,11 @@ package com.khalev.efd.robots.firefighters;
 import com.khalev.efd.simulation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EnergyProcessor extends SensoryInputsProcessor<EnergyInput> {
 
-    ArrayList<EnergyInput> energies;
+    List<EnergyInput> energies;
     TemperatureMap temperatureMap;
     int initialEnergy = 1500;
     int movingCost = 1;
@@ -16,14 +17,14 @@ public class EnergyProcessor extends SensoryInputsProcessor<EnergyInput> {
     int chargingValue = 100;
 
     @Override
-    protected ArrayList<EnergyInput> sendInputs(ArrayList<RobotPlacement> robots, ArrayList<ObjectPlacement> objects) {
+    protected List<EnergyInput> sendInputs(List<RobotPlacement> robots, List<ObjectPlacement> objects) {
         if (energies == null) {
             energies = new ArrayList<>();
             for (int i = 0; i < robots.size(); i++) {
                 energies.add(new EnergyInput(initialEnergy));
             }
         }
-        ArrayList<Coordinates> coolers = new ArrayList<>();
+        List<Coordinates> coolers = new ArrayList<>();
         for (int i = 0; i < robots.size(); i++) {
             RobotPlacement r = robots.get(i);
             Action action = r.currentAction;
@@ -39,7 +40,7 @@ public class EnergyProcessor extends SensoryInputsProcessor<EnergyInput> {
             }
         }
         temperatureMap.cycle(coolers);
-        ArrayList<TemperatureData> temperatures = temperatureMap.getTemperatureData(robots);
+        List<TemperatureData> temperatures = temperatureMap.getTemperatureData(robots);
         for (int i = 0; i < energies.size(); i++) {
             energies.get(i).data = temperatures.get(i);
         }

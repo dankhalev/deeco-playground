@@ -2,6 +2,12 @@ package com.khalev.efd.visualization;
 
 import com.badlogic.gdx.graphics.Color;
 
+/**
+ * Draws objects and a status string.
+ * @see ComponentVisualizationLayer
+ *
+ * @author Danylo Khalyeyev
+ */
 class ObjectVisualizationLayer extends ComponentVisualizationLayer {
 
     private Color statusColor;

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <visualization zoom="6" maxCPS="10" fontColor="Green">
-	<additional class="com.khalev.efd.robots.firefighters.TemperatureLayer" arg="simulation-logs\firemap.txt"/>
+	<additional class="com.khalev.efd.robots.firefighters.TemperatureLayer" arg="simulation-logs/firemap.txt"/>
 	<objects>
 		<class-based>
-			<default texture="examples\images\station.png"/>
+			<default texture="examples/images/station.png"/>
 		</class-based>
 	</objects>
 	<robots displayNumbers="true" enableRotation="true" fontColor="Blue">
 		<tag-based>
-			<default texture="examples\images\robot.png"/>
-			<tag name="BROKEN" texture="examples\images\robot_black.png"/>
-			<tag name="RAMBLE" texture="examples\images\robot_green.png"/>
-			<tag name="FOLLOW" texture="examples\images\robot_yellow.png"/>
-			<tag name="FIGHT" texture="examples\images\robot_blue.png"/>
-			<tag name="CHARGE" texture="examples\images\robot_red.png"/>
+			<default texture="examples/images/robot.png"/>
+			<tag name="BROKEN" texture="examples/images/robot_black.png"/>
+			<tag name="RAMBLE" texture="examples/images/robot_green.png"/>
+			<tag name="FOLLOW" texture="examples/images/robot_yellow.png"/>
+			<tag name="FIGHT" texture="examples/images/robot_blue.png"/>
+			<tag name="CHARGE" texture="examples/images/robot_red.png"/>
 		</tag-based>
 	</robots>
 </visualization>

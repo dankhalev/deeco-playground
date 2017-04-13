@@ -3,16 +3,17 @@ package com.khalev.efd.robots.competition;
 import com.khalev.efd.simulation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EnergyProcessor extends SensoryInputsProcessor<EnergyInput> {
 
-    ArrayList<EnergyInput> energies;
+    List<EnergyInput> energies;
     int initialEnergy = 300;
     int movingCost = 1;
     int chargingValue = 30;
 
     @Override
-    protected ArrayList<EnergyInput> sendInputs(ArrayList<RobotPlacement> robots, ArrayList<ObjectPlacement> objects) {
+    protected List<EnergyInput> sendInputs(List<RobotPlacement> robots, List<ObjectPlacement> objects) {
         if (energies == null) {
             energies = new ArrayList<>();
             for (int i = 0; i < robots.size(); i++) {

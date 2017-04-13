@@ -32,4 +32,5 @@ public class SignalEnsemble {
         double distance =  xDist*xDist + yDist*yDist;
         alert.value = distance < 400;
     }
+
 }

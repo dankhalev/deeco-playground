@@ -1,5 +1,11 @@
 package com.khalev.efd.simulation;
 
+/**
+ * Represents data that {@link Coordinator} collects from each object through {@link ObjectEnsemble} and transmits to
+ * the {@link Environment}.
+ *
+ * @author Danylo Khalyeyev
+ */
 class ObjectData {
 
     Coordinates coordinates;
@@ -11,4 +17,5 @@ class ObjectData {
         this.size = size;
         this.tag = tag;
     }
+
 }

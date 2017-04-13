@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<simulation cycles="500" logfile="simulation-logs\simple-2.txt" bitmap="examples\maps\map02.bmp">
+<simulation cycles="500" logfile="simulation-logs/simple-2.txt" bitmap="examples/maps/map02.bmp">
 	<robots>
 		<robot class="com.khalev.efd.robots.basic.OrtogonalRobot" posX="50.0" posY="50.0" angle="90"/>
 		<robot class="com.khalev.efd.robots.basic.OrtogonalRobot" posX="60.0" posY="50.0" angle="140"/>

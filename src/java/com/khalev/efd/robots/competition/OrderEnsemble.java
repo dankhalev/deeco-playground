@@ -6,6 +6,7 @@ import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 @Ensemble
@@ -14,8 +15,8 @@ public class OrderEnsemble {
 
     @Membership
     public static boolean membership(
-            @In("coord.teamOrders") HashMap<Integer, RobotOrder> teamOrders,
-            @In("coord.teamPlacements") HashMap<Integer, RobotData> teamPlacements,
+            @In("coord.teamOrders") Map<Integer, RobotOrder> teamOrders,
+            @In("coord.teamPlacements") Map<Integer, RobotData> teamPlacements,
             @In("member.TMID") Integer id
     ) {
         return true;
@@ -23,8 +24,8 @@ public class OrderEnsemble {
 
     @KnowledgeExchange
     public static void map(
-            @In("coord.teamOrders") HashMap<Integer, RobotOrder> teamOrders,
-            @InOut("coord.teamPlacements") ParamHolder<HashMap<Integer, RobotData>> teamPlacements,
+            @In("coord.teamOrders") Map<Integer, RobotOrder> teamOrders,
+            @InOut("coord.teamPlacements") ParamHolder<Map<Integer, RobotData>> teamPlacements,
             @InOut("member.order") ParamHolder<RobotOrder> order,
             @In("member.sensor") SensorySystem sensor,
             @In("member.TMID") Integer id

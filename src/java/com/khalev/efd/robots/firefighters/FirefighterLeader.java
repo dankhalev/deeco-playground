@@ -7,16 +7,13 @@ import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class FirefighterLeader extends FirefighterDrone {
 
-    public HashMap<Integer, FirefighterOrder> teamOrders = new HashMap<>();
-    public HashMap<Integer, FirefighterData> teamPlacements = new HashMap<>();
+    public Map<Integer, FirefighterOrder> teamOrders = new HashMap<>();
+    public Map<Integer, FirefighterData> teamPlacements = new HashMap<>();
 
     public FirefighterLeader() {
         super();
@@ -31,8 +28,8 @@ public class FirefighterLeader extends FirefighterDrone {
             @InOut("autonomous") ParamHolder<Boolean> autonomous,
             @InOut("order") ParamHolder<FirefighterOrder> order,
             @In("position") Coordinates position,
-            @InOut("teamOrders") ParamHolder<HashMap<Integer, FirefighterOrder>> teamOrders,
-            @InOut("teamPlacements") ParamHolder<HashMap<Integer, FirefighterData>> teamPlacements
+            @InOut("teamOrders") ParamHolder<Map<Integer, FirefighterOrder>> teamOrders,
+            @InOut("teamPlacements") ParamHolder<Map<Integer, FirefighterData>> teamPlacements
     ) {
         EnergyInput energy = sensor.getInputFromSensor("energy", EnergyInput.class);
         if (energy == null) {
@@ -40,7 +37,7 @@ public class FirefighterLeader extends FirefighterDrone {
         }
         autonomous.value = energy.energy < FirefighterLeaderwheels.requestThreshold;
         teamPlacements.value.put(id, new FirefighterData(position, energy.energy));
-        ArrayList<PossibleAssignment> assignments = new ArrayList<>();
+        List<PossibleAssignment> assignments = new ArrayList<>();
         Set<Integer> keys = teamPlacements.value.keySet();
         for (Integer key : keys) {
             for (int i = 0; i < energy.fires.size(); i++) {
