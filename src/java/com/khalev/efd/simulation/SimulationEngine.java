@@ -1,6 +1,5 @@
 package com.khalev.efd.simulation;
 
-import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,13 +142,13 @@ class SimulationEngine extends SensoryInputsProcessor<CollisionData> {
      */
     private void resolveRobotRobotCollisions(List<Action> actions, List<RobotPlacement> newRobotPlacements) {
         //first, we are testing each pair of robots for collision and add those collisions to the list
-        List<Pair<Integer, Integer>> listOfCollisions = new ArrayList<>();
+        List<Collision> listOfCollisions = new ArrayList<>();
         for (int i = 0; i < robots.size(); i++) {
             for (int j = 0; j < robots.size(); j++) {
                 if (i > j) {
                     if (Geometry.distance(newRobotPlacements.get(i), newRobotPlacements.get(j)) <
                             doubleRadiusSquared(newRobotPlacements.get(i), newRobotPlacements.get(j)) - ST_ERR) {
-                        listOfCollisions.add(new Pair<>(i, j));
+                        listOfCollisions.add(new Collision(Collision.Type.ROBOT, i, j));
                     }
                 }
             }
@@ -157,9 +156,9 @@ class SimulationEngine extends SensoryInputsProcessor<CollisionData> {
 
         //then we go through that list and rolling robots back to the point of collision
         while (!listOfCollisions.isEmpty()) {
-            Pair<Integer, Integer> p = listOfCollisions.remove(0);
-            int i = p.getKey();
-            int j = p.getValue();
+            Collision p = listOfCollisions.remove(0);
+            int i = p.robot1;
+            int j = p.robot2;
 
             if (Geometry.distance(newRobotPlacements.get(i), newRobotPlacements.get(j)) <
                     doubleRadiusSquared(newRobotPlacements.get(i), newRobotPlacements.get(j)) - ST_ERR) {
@@ -175,7 +174,7 @@ class SimulationEngine extends SensoryInputsProcessor<CollisionData> {
                     if (i != k && j != k) {
                         if (Geometry.distance(newRobotPlacements.get(i), newRobotPlacements.get(k)) <
                                 doubleRadiusSquared(newRobotPlacements.get(i), newRobotPlacements.get(k)) - ST_ERR) {
-                            listOfCollisions.add(new Pair<>(i, k));
+                            listOfCollisions.add(new Collision(Collision.Type.ROBOT, i, k));
                         }
                     }
                 }
@@ -183,7 +182,7 @@ class SimulationEngine extends SensoryInputsProcessor<CollisionData> {
                     if (i != k && j != k) {
                         if (Geometry.distance(newRobotPlacements.get(j), newRobotPlacements.get(k)) <
                                 doubleRadiusSquared(newRobotPlacements.get(j), newRobotPlacements.get(k)) - ST_ERR) {
-                            listOfCollisions.add(new Pair<>(j, k));
+                            listOfCollisions.add(new Collision(Collision.Type.ROBOT, j, k));
                         }
                     }
                 }

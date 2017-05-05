@@ -46,7 +46,7 @@ public abstract class VisualizationLayer {
     protected void initialize(ShapeRenderer shapeRenderer, SpriteBatch spriteBatch) {
         this.shapeRenderer = shapeRenderer;
         this.spriteBatch = spriteBatch;
-        this.font = new BitmapFont(Gdx.files.internal("src\\resources\\defaultFont.fnt"),Gdx.files.internal("src\\resources\\defaultFont.png"),true);
+        this.font = new BitmapFont(Gdx.files.internal("src/resources/defaultFont.fnt"),Gdx.files.internal("src/resources/defaultFont.png"),true);
         font.getData().setScale(Visualizer.getZoom()/2.0f);
         font.setColor(Color.BLACK);
     }

@@ -42,6 +42,8 @@
     <pathelement location="${basedir}/libs/lwjgl_util-2.9.2.jar"/>
     <pathelement location="${basedir}/libs/lwjgl-platform-2.9.2-natives-windows.jar"/>
     <pathelement location="${basedir}/libs/jinput-platform-2.0.5-natives-windows.jar"/>
+    <pathelement location="${basedir}/libs/jinput-platform-2.0.5-natives-linux.jar"/>
+    <pathelement location="${basedir}/libs/lwjgl-platform-2.9.2-natives-linux.jar"/>
     <pathelement location="${basedir}/libs/gdx-platform-1.9.4-natives-desktop.jar"/>
     <pathelement location="${basedir}/libs/gdx-box2d-platform-1.9.4-natives-desktop.jar"/>
   </path>

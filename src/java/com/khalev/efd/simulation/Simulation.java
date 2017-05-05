@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class Simulation {
 
-    private final String SIMULATION_SCHEMA = "src\\resources\\Simulation.xsd";
+    private final String SIMULATION_SCHEMA = "src/resources/Simulation.xsd";
     private final int DEFAULT_WAITING_TIME = 2;
     private final double DEFAULT_ROBOT_SIZE = 3.0;
     private final double MINIMAL_ROBOT_SIZE = 1.0;

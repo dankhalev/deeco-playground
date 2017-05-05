@@ -28,7 +28,7 @@ import java.util.Objects;
  */
 class VisualizationInitializer {
 
-    private final String XMLSchema = "src\\resources\\Visualization.xsd";
+    private final String XMLSchema = "src/resources/Visualization.xsd";
     private List<String> robotClasses = new ArrayList<>();
     private List<String> objectClasses = new ArrayList<>();
     private Color statusColor = Color.BLACK;
