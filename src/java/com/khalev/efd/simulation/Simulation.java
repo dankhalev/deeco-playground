@@ -292,7 +292,7 @@ public class Simulation {
      */
     private DEECoRobot createNewRobot(String classname, String tag, String arg) throws SimulationParametersException {
         try {
-            Class clazz = Class.forName(classname);
+            Class<?> clazz = Class.forName(classname);
             Annotation annotation = clazz.getAnnotation(Component.class);
             if (annotation == null) {
                 throw new SimulationParametersException("Class " + classname + " is not a DEECo @Component");
@@ -327,7 +327,7 @@ public class Simulation {
      */
     private DEECoObject createNewObject(String classname, double x, double y, double size, String tag, String arg) throws SimulationParametersException {
         try {
-            Class clazz = Class.forName(classname);
+            Class<?> clazz = Class.forName(classname);
             Annotation annotation = clazz.getAnnotation(Component.class);
             if (annotation == null) {
                 throw new SimulationParametersException("Class " + classname + " is not a DEECo @Component");
@@ -358,7 +358,7 @@ public class Simulation {
      */
     private SensoryInputsProcessor createDataProcessor(String classname, String arg) throws SimulationParametersException {
         try {
-            Class cls = Class.forName(classname);
+            Class<?> cls = Class.forName(classname);
             if (!SensoryInputsProcessor.class.isAssignableFrom(cls)) {
                 throw new SimulationParametersException("Class " + classname + " does not extend class SensoryInputsProcessor.");
             }
@@ -381,7 +381,7 @@ public class Simulation {
      */
     private Class loadEnsemble(String classname) throws SimulationParametersException {
         try {
-            Class cls = Class.forName(classname);
+            Class<?> cls = Class.forName(classname);
             Annotation annotation = cls.getAnnotation(Ensemble.class);
             if (annotation == null) {
                 throw new SimulationParametersException("Class " + classname + " is not a DEECo @Ensemble");

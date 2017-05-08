@@ -116,6 +116,7 @@ class EnvironmentImpl extends Environment {
                     //SIP receives unmodifiable view on the list of robots and objects
                     List<RobotPlacement> robotPlacements = Collections.unmodifiableList(robots);
                     List<ObjectPlacement> objectPlacements = Collections.unmodifiableList(objects);
+                    @SuppressWarnings("unchecked")
                     List list = sip.sendInputs(robotPlacements, objectPlacements);
                     //Each SIP has to generate an input for every robot, otherwise we have to throw exception
                     if (list != null && list.size() == robots.size()) {
