@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class AutonomousMode extends FirefighterMode {
 
-    private FirefighterState state = StateFactory.getInstance().getState("RAMBLE");
+    private FirefighterState state = StateFactory.getInstance().getState("ROAM");
 
     @Override
     public String execute(DroneContext context) {

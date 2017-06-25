@@ -12,7 +12,7 @@ class StayOrder extends FirefighterOrder {
     @Override
     public String execute(DroneContext context) {
         context.wheels.setAction(0,0);
-        return "RAMBLE";
+        return "ROAM";
     }
 
 }

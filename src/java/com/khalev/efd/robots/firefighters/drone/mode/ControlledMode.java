@@ -23,6 +23,9 @@ public class ControlledMode extends FirefighterMode {
 
     @Override
     public String execute(DroneContext context) {
+        if (order == null) {
+            return "ROAM";
+        }
         if (Algorithms.detectFrontalCollision(context.collisionData)) {
             destination = order.getDestination();
             state = StateFactory.getInstance().getAvoidState(context);

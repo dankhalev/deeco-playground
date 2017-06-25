@@ -29,10 +29,12 @@ class TemperatureMap {
     private int coolingValue = 20;
     List<Coordinates> seeds = new ArrayList<>();
 
-    TemperatureMap(String file) {
+    TemperatureMap(String fileName) {
         //Initialize fire for logging temperatures
         try {
-            fileWriter = new FileOutputStream(new File(file));
+            File file = new File(fileName);
+            file.getParentFile().mkdirs();
+            fileWriter = new FileOutputStream(file);
             fileWriter.write(sizeX);
             fileWriter.write(sizeY);
         } catch (IOException e) {

@@ -21,7 +21,7 @@ class RechargeOrder extends FirefighterOrder {
         } else {
             context.wheels.setAction(0,0);
         }
-        return "CHARGE";
+        return "RECHARGE";
     }
 
     @Override
