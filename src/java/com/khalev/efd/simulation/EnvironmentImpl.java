@@ -275,6 +275,9 @@ class EnvironmentImpl extends Environment {
      * @return a prefixed string
      */
     private String prefixString(String s) {
+        if (s == null) {
+            return "";
+        }
         char[] array = s.toCharArray();
         StringBuilder builder = new StringBuilder("");
         for (char c : array) {

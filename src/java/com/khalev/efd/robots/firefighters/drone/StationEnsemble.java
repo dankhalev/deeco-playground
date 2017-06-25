@@ -1,9 +1,14 @@
-package com.khalev.efd.robots.firefighters;
+package com.khalev.efd.robots.firefighters.drone;
 
 import com.khalev.efd.simulation.Coordinates;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Through this ensemble, the charging station advertises its position to firefighter robots.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class StationEnsemble {
@@ -13,7 +18,7 @@ public class StationEnsemble {
             @In("coord.tag") String tag,
             @In("member.powerStation") Coordinates target
     ) {
-        return tag.equals("Power Station");
+        return tag.equals("Charging Station");
     }
 
     @KnowledgeExchange

@@ -28,11 +28,14 @@ public final class SensorySystem {
      * @return if the sensor with this name exists and if a type of its input value is cls than value on input, else null
      */
     public <T> T getInputFromSensor(String name, Class<T> cls) {
-        if (sensors.contains(name)) {
-            return Environment.getInstance().getInputFromSensor(rID, name, cls);
-        } else {
-            return null;
+        try {
+            if (sensors.contains(name)) {
+                return Environment.getInstance().getInputFromSensor(rID, name, cls);
+            }
+        } catch (Exception e) {
+            Environment.getInstance().exitWithException(e);
         }
+        return null;
     }
 
     /**

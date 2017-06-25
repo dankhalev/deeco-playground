@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <simulation cycles="500" logfile="simulation-logs/competition.txt" sizeX="100" sizeY="100">
 	<sensors>
-		<sensor name="coords" processor="com.khalev.efd.robots.GlobalCoordinatesProcessor"/>
+		<sensor name="coords" processor="com.khalev.efd.robots.advanced.CoordinatesProcessor"/>
 		<sensor name="energy" processor="com.khalev.efd.robots.competition.EnergyProcessor"/>
 	</sensors>
 	<robots>

@@ -51,6 +51,16 @@ public class Geometry {
     }
 
     /**
+     * Returns an angle between a subject and an object, from the subject's point of view.
+     * @param subject subject's coordinates
+     * @param object object's coordinates
+     * @return an angle between a subject and an object, from the subject's point of view
+     */
+    public static double subjectiveAngleBetween(Coordinates subject, Coordinates object) {
+        return subjectiveAngleBetween(subject.x, subject.y, object.x, object.y, subject.angle);
+    }
+
+    /**
      * Normalizes a given angle to a range of (-pi, pi).
      * @param angle angle to normalize
      * @return angle normalized to a range of (-pi, pi)

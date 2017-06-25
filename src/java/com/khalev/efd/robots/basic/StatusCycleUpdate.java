@@ -1,4 +1,4 @@
-package com.khalev.efd.robots;
+package com.khalev.efd.robots.basic;
 
 import com.khalev.efd.simulation.Coordinator;
 import cz.cuni.mff.d3s.deeco.annotations.*;
