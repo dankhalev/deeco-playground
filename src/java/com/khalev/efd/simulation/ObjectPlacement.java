@@ -6,7 +6,7 @@ package com.khalev.efd.simulation;
  *
  * @author Danylo Khalyeyev
  */
-public class ObjectPlacement {
+public final class ObjectPlacement {
 
     DEECoObject object;
     Double x;

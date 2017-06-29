@@ -5,7 +5,8 @@ import cz.cuni.mff.d3s.deeco.annotations.Ensemble;
 import cz.cuni.mff.d3s.deeco.annotations.processor.AnnotationProcessorException;
 import cz.cuni.mff.d3s.deeco.runtime.DEECoException;
 import cz.cuni.mff.d3s.deeco.runtime.DEECoNode;
-import cz.cuni.mff.d3s.deeco.timer.WallTimeTimer;
+import cz.cuni.mff.d3s.deeco.timer.DiscreteEventTimer;
+import cz.cuni.mff.d3s.deeco.timer.SimulationTimer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import javax.xml.XMLConstants;
@@ -30,10 +31,10 @@ import java.util.List;
  *
  * @author Danylo Khalyeyev
  */
-public class Simulation {
+public final class Simulation {
 
     private final String SIMULATION_SCHEMA = "src/resources/Simulation.xsd";
-    private final int DEFAULT_WAITING_TIME = 2;
+    private final int DEFAULT_WAITING_TIME = 1;
     private final double DEFAULT_ROBOT_SIZE = 3.0;
     private final double MINIMAL_ROBOT_SIZE = 1.0;
 
@@ -63,6 +64,7 @@ public class Simulation {
             throw  new SimulationParametersException("Specified file does not represent a valid simulation properties file");
         }
 
+        resetEnvironment();
         initializeFromXML(scenarioFile);
     }
 
@@ -74,8 +76,8 @@ public class Simulation {
      */
     public void startSimulation() throws AnnotationProcessorException, DEECoException {
         //Initialize DEECo runtime
-        WallTimeTimer wallTimeTimer = new WallTimeTimer();
-        DEECoNode deecoNode = new DEECoNode(0, wallTimeTimer);
+        SimulationTimer timer = new DiscreteEventTimer();
+        DEECoNode deecoNode = new DEECoNode(0, timer);
         for (Object o : componentsAndEnsembles) {
             if (o instanceof Class) {
                 deecoNode.deployEnsemble((Class)o);
@@ -87,10 +89,18 @@ public class Simulation {
         Environment env = new EnvironmentImpl(cycles, robots, logfile, map, booleanMap, sensors, objects, sensorNames);
         boolean canStart = Environment.setInstance(env);
         if (!canStart) {
-            throw new RuntimeException("Cannot start simulation because another one was already started");
+            throw new RuntimeException("Cannot start simulation because another one is running");
         }
         //Start runtime
-        wallTimeTimer.start();
+        int timeToSimulate = (cycles+1)*(Environment.CYCLE*Environment.getWaitingTime()+Environment.CYCLE);
+        timer.start(timeToSimulate);
+        resetEnvironment();
+    }
+
+    private void resetEnvironment() {
+        Environment.reset();
+        DEECoRobot.resetCounter();
+        DEECoObject.resetCounter();
     }
 
     /**

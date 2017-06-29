@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Danylo Khalyeyev
  */
-public class Visualization {
+public final class Visualization {
 
     private int windowWidth;
     private int windowHeight;

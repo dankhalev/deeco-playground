@@ -46,6 +46,10 @@ public class DEECoObject {
         this.size = size;
     }
 
+    static void resetCounter() {
+        OID = 0;
+    }
+
     /**
      * Sets parameters of this object to specified values. This method is always called during initialization of the
      * simulation.

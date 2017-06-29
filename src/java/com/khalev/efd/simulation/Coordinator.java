@@ -83,7 +83,7 @@ public class Coordinator {
 
     @Process
     @PeriodicScheduling(period = Environment.CYCLE)
-    public static void nextCycle(
+    public static void cycle(
         @InOut("robotData") ParamHolder<RobotData[]> robotData,
         @InOut("objectData") ParamHolder<ObjectData[]> objectData,
         @InOut("phase") ParamHolder<Phase> phase,
@@ -124,9 +124,8 @@ public class Coordinator {
                 counter.value = 0;
             } else if (phase.value == Phase.WAITING) {
                 //In WAITING phase we only have to wait a specified time
-                if (counter.value < Environment.getWaitingTime()) {
-                    counter.value += Environment.CYCLE;
-                } else {
+                counter.value += Environment.CYCLE;
+                if (counter.value >= Environment.getWaitingTime()) {
                     //After we have waited enough, we can start collecting robots' actions and other data from components
                     phase.value = Phase.FETCHING;
                     Environment.getInstance().getLogger().fine("FETCHING PHASE");

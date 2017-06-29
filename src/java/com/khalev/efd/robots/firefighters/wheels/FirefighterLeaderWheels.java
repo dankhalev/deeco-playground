@@ -13,7 +13,7 @@ import com.khalev.efd.simulation.SensorySystem;
  */
 public class FirefighterLeaderWheels extends FirefighterWheels {
 
-    private boolean requestCoordinatorData = false;
+    private boolean requestExtendedData = false;
     public static final int requestThreshold = 300;
 
     @Override
@@ -23,7 +23,7 @@ public class FirefighterLeaderWheels extends FirefighterWheels {
         if (cycle <= allowedCycle) {
             action = new EnergyTemperatureAction(this.speed * MAX_SPEED, this.rotationAngle);
             action.isExtinguisherActivated = isExtinguisherActivated;
-            action.coordinatorDataRequest = requestCoordinatorData;
+            action.extendedDataRequest = requestExtendedData;
         }
         actionSent = true;
         return action;
@@ -33,7 +33,7 @@ public class FirefighterLeaderWheels extends FirefighterWheels {
         EnergyTemperatureInput energyTemperatureInput = sensorySystem.getInputFromSensor("energy", EnergyTemperatureInput.class);
         if (energyTemperatureInput != null && energyTemperatureInput.energy > 0) {
             allowedCycle = lastCycle + 2;
-            requestCoordinatorData = energyTemperatureInput.energy > requestThreshold;
+            requestExtendedData = energyTemperatureInput.energy > requestThreshold;
         }
     }
 }

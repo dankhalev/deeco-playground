@@ -103,10 +103,9 @@ class EnvironmentImpl extends Environment {
             startTime = System.nanoTime();
         }
         try {
-            writeSimulationLogs();
-            logger.info("CYCLE " + cycle);
-
             if (!endCondition()) {
+                writeSimulationLogs();
+                logger.info("CYCLE " + cycle);
                 //Compute new positions of robots
                 previousPositions = robots;
                 robots = simulationEngine.performActions(actions);
@@ -130,13 +129,15 @@ class EnvironmentImpl extends Environment {
                     writeRobotLogs();
                 }
                 cycle++;
-                return 0;
-            } else {
-                writeTimerLogs();
-                logfile.close();
-                System.exit(0);
-                return 1;
+
+                if (endCondition()) {
+                    writeTimerLogs();
+                    logfile.close();
+                    return 1;
+                }
             }
+
+            return 0;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -335,7 +336,7 @@ class EnvironmentImpl extends Environment {
      * @return true if simulation has to stop, false otherwise
      */
     private boolean endCondition() {
-        return cycle >= CYCLES || endSignal;
+        return cycle > CYCLES || endSignal;
     }
 
 }

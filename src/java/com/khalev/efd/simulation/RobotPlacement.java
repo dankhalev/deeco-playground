@@ -5,7 +5,7 @@ package com.khalev.efd.simulation;
  *
  * @author Danylo Khalyeyev
  */
-public class RobotPlacement {
+public final class RobotPlacement {
 
     DEECoRobot robot;
     Double x;

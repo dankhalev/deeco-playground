@@ -57,6 +57,10 @@ public class DEECoRobot {
         };
     }
 
+    static void resetCounter() {
+        RID = 0;
+    }
+
     /**
      * Sets tag of this robot to a specified value. This method is always called during initialization of the simulation.
      * @param tag tag specified for this robot in scenario XML file

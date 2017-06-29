@@ -6,12 +6,12 @@ package com.khalev.efd.simulation;
  *
  * @author Danylo Khalyeyev
  */
-public class Line {
+public final class Line {
 
-    double start;
-    double end;
-    boolean isVertical;
-    int horizon;
+    final double start;
+    final double end;
+    final boolean isVertical;
+    final int horizon;
 
     /**
      * For a vertical line returns its smaller Y-coordinate, for a horizontal line its smaller X-coordinate.

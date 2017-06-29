@@ -120,7 +120,9 @@ public class AutonomousRobot extends DEECoRobot {
         pw.provideEnergy(sensor);
 
         //Decision-making
-        executeOrder(collisionData, order, pw, mode, charger.value, coordinates, trajectoryOrder, trajectory);
+        if (order != null) {
+            executeOrder(collisionData, order, pw, mode, charger.value, coordinates, trajectoryOrder, trajectory);
+        }
 
         if (energy.energy > 0) {
             tag.value = String.valueOf(energy.energy);

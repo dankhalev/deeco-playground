@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Danylo Khalyeyev
  */
-public class Visualizer extends ApplicationAdapter implements InputProcessor {
+public final class Visualizer extends ApplicationAdapter implements InputProcessor {
 
 	private static int ZOOM = 5;
 	static int maxCPS = 1000;

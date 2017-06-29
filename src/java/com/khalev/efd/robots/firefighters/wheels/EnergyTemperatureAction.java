@@ -13,7 +13,7 @@ import com.khalev.efd.simulation.Action;
 public class EnergyTemperatureAction extends Action {
 
     public boolean isExtinguisherActivated = false;
-    public boolean coordinatorDataRequest = false;
+    public boolean extendedDataRequest = false;
 
     public EnergyTemperatureAction(double velocity, double rotation) {
         super(velocity, rotation);

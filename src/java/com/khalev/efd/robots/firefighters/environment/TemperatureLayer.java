@@ -25,6 +25,7 @@ public class TemperatureLayer extends VisualizationLayer {
     private int sizeX;
     private int sizeY;
     private Pixmap pixmap;
+    private boolean isNextCycleAvailable = true;
 
     public TemperatureLayer() {
 
@@ -40,29 +41,33 @@ public class TemperatureLayer extends VisualizationLayer {
                         values[i][j] = fileInputStream.read();
                     }
                 }
+                isNextCycleAvailable = fileInputStream.available() > 0;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             this.cycle++;
         }
+
         int zoom = Visualizer.getZoom();
         //Initialize pixmap at the first call of this method.
         if (pixmap == null) {
             pixmap = new Pixmap(sizeX*zoom, sizeY * zoom, Pixmap.Format.RGB888);
         }
-        //Compute the value of every pixel on the screen by interpolating it from adjacent temperature values.
-        for (int i = 0; i < sizeX * zoom; i++) {
-            for (int j = 0; j < sizeY * zoom; j++) {
-                float v00 = values[i / zoom][j / zoom] / 256f;
-                float v01 = values[i / zoom][j / zoom + 1] / 256f;
-                float v10 = values[i / zoom + 1][j / zoom] / 256f;
-                float v11 = values[i / zoom + 1][j / zoom + 1] / 256f;
-                float offX = (i % zoom) / (float) (zoom);
-                float offY = (j % zoom) / (float) (zoom);
-                float v;
-                v = v00 * (1 - offX) * (1 - offY) + v01 * offY * (1 - offX) + v10 * offX * (1 - offY) + v11 * offX * offY;
-                pixmap.setColor(new Color(v,v,v,1f));
-                pixmap.drawPixel(i,j);
+        if (isNextCycleAvailable) {
+            //Compute the value of every pixel on the screen by interpolating it from adjacent temperature values.
+            for (int i = 0; i < sizeX * zoom; i++) {
+                for (int j = 0; j < sizeY * zoom; j++) {
+                    float v00 = values[i / zoom][j / zoom] / 256f;
+                    float v01 = values[i / zoom][j / zoom + 1] / 256f;
+                    float v10 = values[i / zoom + 1][j / zoom] / 256f;
+                    float v11 = values[i / zoom + 1][j / zoom + 1] / 256f;
+                    float offX = (i % zoom) / (float) (zoom);
+                    float offY = (j % zoom) / (float) (zoom);
+                    float v;
+                    v = v00 * (1 - offX) * (1 - offY) + v01 * offY * (1 - offX) + v10 * offX * (1 - offY) + v11 * offX * offY;
+                    pixmap.setColor(new Color(v, v, v, 1f));
+                    pixmap.drawPixel(i, j);
+                }
             }
         }
         //Draw the map.

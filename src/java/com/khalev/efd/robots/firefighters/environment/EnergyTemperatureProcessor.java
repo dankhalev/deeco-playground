@@ -43,8 +43,8 @@ public class EnergyTemperatureProcessor extends SensoryInputsProcessor<EnergyTem
                     extinguishers.add(new Coordinates((int) r.getX(), (int) r.getY(), 0));
                     energies.get(i).energy -= coolingCost;
                 }
-                if (((EnergyTemperatureAction) action).coordinatorDataRequest) {
-                    energies.get(i).fires = temperatureMap.seeds;
+                if (((EnergyTemperatureAction) action).extendedDataRequest) {
+                    energies.get(i).fires = temperatureMap.getFireCoordinates();
                     energies.get(i).energy -= knowledgeCost;
                 }
             }
@@ -79,8 +79,8 @@ public class EnergyTemperatureProcessor extends SensoryInputsProcessor<EnergyTem
         }
         //Subtract damage points from the energies of the robots that are affected by high temperatures
         for (EnergyTemperatureInput energyTemperatureInput : energies) {
-            if (energyTemperatureInput.data.maxDetectedTemperature > temperatureMap.threshold) {
-                int damage = ((int) energyTemperatureInput.data.maxDetectedTemperature - temperatureMap.threshold) / 10;
+            if (energyTemperatureInput.data.maxDetectedTemperature > temperatureMap.getThreshold()) {
+                int damage = ((int) energyTemperatureInput.data.maxDetectedTemperature - temperatureMap.getThreshold()) / 10;
                 energyTemperatureInput.energy -= damage;
                 energyTemperatureInput.damage = damage;
             }
@@ -92,7 +92,7 @@ public class EnergyTemperatureProcessor extends SensoryInputsProcessor<EnergyTem
     @Override
     protected void processArg(String arg) {
         if (arg != null) {
-            temperatureMap = new TemperatureMap(arg);
+            temperatureMap = new TemperatureMap(arg, environmentMap.getSizeX(), environmentMap.getSizeY());
         } else {
             throw new RuntimeException("TemperatureMap: output file was not specified");
         }

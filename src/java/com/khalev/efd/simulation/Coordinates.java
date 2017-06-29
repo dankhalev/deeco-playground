@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class Coordinates {
 
-    public double x, y, angle;
+    public final double x, y, angle;
 
     public Coordinates(double x, double y, double angle) {
         this.x = x;

@@ -127,13 +127,13 @@ class VisualizationInitializer {
             MapVisualizationLayer mapLayer = new MapVisualizationLayer(mapColoring, map);
             layers.add(mapLayer);
         }
-        if (!isRobotLayerInitialized) {
-            RobotVisualizationLayer robotLayer = new RobotVisualizationLayer(robotConfigs, logReader);
-            layers.add(robotLayer);
-        }
         if(!isObjectLayerInitialized) {
             ObjectVisualizationLayer objectLayer = new ObjectVisualizationLayer(objectConfigs, logReader, statusColor);
             layers.add(objectLayer);
+        }
+        if (!isRobotLayerInitialized) {
+            RobotVisualizationLayer robotLayer = new RobotVisualizationLayer(robotConfigs, logReader);
+            layers.add(robotLayer);
         }
 
         objectConfigs.rotationEnabled = false;

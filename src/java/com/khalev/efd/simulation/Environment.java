@@ -16,7 +16,7 @@ abstract class Environment {
 
     static final String collisionSensorName = "collisions";
     static final int CYCLE = 1;
-    private static int waitingTime = -1;
+    private static int waitingTime = 1;
     private static Environment instance;
 
     static int getWaitingTime() {
@@ -24,7 +24,7 @@ abstract class Environment {
     }
 
     static boolean setWaitingTime(int i) {
-        if (waitingTime == -1) {
+        if (instance == null && i > 0) {
             waitingTime = i;
             return true;
         }
@@ -41,6 +41,11 @@ abstract class Environment {
             return true;
         }
         return false;
+    }
+
+    static void reset() {
+        instance = null;
+        waitingTime = 1;
     }
 
     /**

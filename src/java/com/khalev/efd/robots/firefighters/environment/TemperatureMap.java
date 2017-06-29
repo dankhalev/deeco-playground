@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,17 +21,19 @@ class TemperatureMap {
 
     private FileOutputStream fileWriter;
     private int[][] values;
-    private int sizeX = 100;
-    private int sizeY = 100;
+    private int sizeX;
+    private int sizeY;
     private int generatorValue = 7;
     private int seedValue = 5;
     private int extinguisherSize = 3;
-    int threshold = 40;
+    private int threshold = 40;
     private int coolingValue = 20;
-    List<Coordinates> seeds = new ArrayList<>();
+    private List<Fire> seeds = new ArrayList<>();
 
-    TemperatureMap(String fileName) {
-        //Initialize fire for logging temperatures
+    TemperatureMap(String fileName, int sizeX, int sizeY) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        //Initialize file for logging temperatures
         try {
             File file = new File(fileName);
             file.getParentFile().mkdirs();
@@ -49,6 +52,10 @@ class TemperatureMap {
         }
     }
 
+    /**
+     * Computes the state of the temperature map for the next cycle
+     * @param extinguishers list of coordinates of fire extinguishers that are active in the cycle
+     */
     void computeNextCycle(List<Coordinates> extinguishers) {
         int[][] valueBuffer = new int[sizeX][sizeY];
         //Smoothing & Cooling
@@ -70,14 +77,12 @@ class TemperatureMap {
         if (Math.random() * generatorValue < 1) {
             int x = (int) (Math.random() * (sizeX - 10) + 5);
             int y = (int) (Math.random() * (sizeY - 10) + 5);
-            seeds.add(new Coordinates(x,y,seedValue));
+            seeds.add(new Fire(x,y,seedValue));
         }
         for (int i = seeds.size() - 1; i >= 0; i--) {
-            Coordinates seed = seeds.get(i);
-            if (seed.angle > 0) {
-                int x = (int) seed.x;
-                int y = (int) seed.y;
-                valueBuffer[x][y] = 250;
+            Fire seed = seeds.get(i);
+            if (seed.value > 0) {
+                valueBuffer[seed.x][seed.y] = 250;
             } else {
                 seeds.remove(i);
             }
@@ -141,6 +146,18 @@ class TemperatureMap {
         return temperatures;
     }
 
+    List<Coordinates> getFireCoordinates() {
+        List<Coordinates> fires = new ArrayList<>();
+        for (Fire fire : seeds) {
+            fires.add(new Coordinates(fire.x, fire.y, 0));
+        }
+        return fires;
+    }
+
+    int getThreshold() {
+        return threshold;
+    }
+
     /**
      * Accounts for impact of fire extinguishers on temperatures.
      * @param extinguishers list of field coordinates of fire extinguishers that are active in this cycle.
@@ -153,14 +170,26 @@ class TemperatureMap {
                 for (int j = y - extinguisherSize; j <= y + extinguisherSize; j++) {
                     if (i >= 0 && j >=0 && i < sizeX && j < sizeY) {
                         values[i][j] -= coolingValue;
-                        for (Coordinates seed : seeds) {
-                            if (i == (int)seed.x && j == (int)seed.y) {
-                                seed.angle--;
+                        for (Fire seed : seeds) {
+                            if (i == seed.x && j == seed.y) {
+                                seed.value--;
                             }
                         }
                     }
                 }
             }
+        }
+    }
+
+    private class Fire {
+        private final int x;
+        private final int y;
+        private int value;
+
+        public Fire(int x, int y, int value) {
+            this.x = x;
+            this.y = y;
+            this.value = value;
         }
     }
 }

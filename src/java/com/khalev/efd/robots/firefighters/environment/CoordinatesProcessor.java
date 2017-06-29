@@ -21,10 +21,11 @@ public class CoordinatesProcessor
             List<RobotPlacement> robots,
             List<ObjectPlacement> objects
     ) {
-        List<Coordinates> coords = new ArrayList<>();
+        List<Coordinates> coordinates = new ArrayList<>();
         for (RobotPlacement r : robots) {
-            coords.add(new Coordinates(r.getX(), r.getY(), r.getAngle()));
+            coordinates.add(new Coordinates(r.getX(),
+                    r.getY(), r.getAngle()));
         }
-        return coords;
+        return coordinates;
     }
 }
