@@ -48,9 +48,8 @@ class VisualizationInitializer {
      * @param config a configuration file
      * @return a list of {@link VisualizationLayer}s constructed from provided files
      * @throws IOException if IOException occurs during reading any of those files
-     * @throws VisualizationParametersException if configuration file is not correct
-     * @throws RuntimeException if simulation logs file contains errors (it can happen if it was modified after it was
-     * generated)
+     * @throws VisualizationParametersException if configuration file is not correct or if simulation logs file contains
+     * errors (it can happen if it was modified after it was generated)
      */
     List<VisualizationLayer> init(File logfile, File config) throws IOException, VisualizationParametersException {
         //create and validate configuration document
@@ -77,7 +76,7 @@ class VisualizationInitializer {
                 int sizeY = Integer.parseInt(reader.readLine());
                 map = new EnvironmentMap(sizeX, sizeY);
             } catch (NumberFormatException ex) {
-                throw new RuntimeException("Simulation logs file is not correct");
+                throw new VisualizationParametersException("Simulation logs file is not correct");
             }
         }
         Visualizer.sizeX = map.getWidth()*Visualizer.getZoom();
@@ -89,12 +88,12 @@ class VisualizationInitializer {
         String s;
         s = reader.readLine();
         if (!"---".equals(s)) {
-            throw new RuntimeException("Simulation logs file is not correct");
+            throw new VisualizationParametersException("Simulation logs file is not correct");
         }
         s = reader.readLine();
         while (!Objects.equals(s, "---")) {
             if (s == null) {
-                throw new RuntimeException("Simulation logs file is not correct");
+                throw new VisualizationParametersException("Simulation logs file is not correct");
             }
             String[] ss = s.split(",");
             robotClasses.add(ss[0]);
@@ -104,7 +103,7 @@ class VisualizationInitializer {
         s = reader.readLine();
         while (!Objects.equals(s, "---")) {
             if (s == null) {
-                throw new RuntimeException("Simulation logs file is not correct");
+                throw new VisualizationParametersException("Simulation logs file is not correct");
             }
             objectClasses.add(s);
             objects.add(new ComponentParameters());
@@ -177,7 +176,7 @@ class VisualizationInitializer {
      * @param config an XML configuration file
      * @return XML Document object
      */
-    private Document initializeXMLAndSetZoom(File config) {
+    private Document initializeXMLAndSetZoom(File config) throws VisualizationParametersException {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -189,7 +188,7 @@ class VisualizationInitializer {
             }
             return doc;
         } catch (SAXException | ParserConfigurationException | IOException e) {
-            throw new RuntimeException(e);
+            throw new VisualizationParametersException(e);
         }
     }
 
@@ -251,6 +250,10 @@ class VisualizationInitializer {
         Node cpsAttribute = doc.getDocumentElement().getAttributes().getNamedItem("maxCPS");
         if (cpsAttribute != null) {
             Visualizer.maxCPS = Integer.parseInt(cpsAttribute.getTextContent());
+        }
+        Node rewindAttribute = doc.getDocumentElement().getAttributes().getNamedItem("rewindSpeed");
+        if (rewindAttribute != null) {
+            Visualizer.setRewindSpeed(Integer.parseInt(rewindAttribute.getTextContent()));
         }
         Node fontAttribute = doc.getDocumentElement().getAttributes().getNamedItem("fontColor");
         if (fontAttribute != null) {

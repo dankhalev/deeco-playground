@@ -20,16 +20,23 @@ import java.util.List;
 public final class Visualizer extends ApplicationAdapter implements InputProcessor {
 
 	private static int ZOOM = 5;
-	static int maxCPS = 1000;
+	static int maxCPS = 30;
 	static int sizeX;
 	static int sizeY;
+	private static int numCycles = 0;
+    private static int rewindSpeed = 10;
 	private ShapeRenderer shapeRenderer;
 	private SpriteBatch spriteBatch;
 	private List<VisualizationLayer> layers = new ArrayList<>();
 	private int cycle = -1;
 	private long previousTime;
+	private long timeRemains = 0;
 	private int minCycleLength;
 	private boolean nextCycle = true;
+
+    private boolean proceed = true;
+    private long previousProcess = 0;
+    private final int POLLING_INTERVAL = 80;
 
 	/**
 	 * Returns a ZOOM parameter that shows how much bigger is the size of displayed window comparing to the size of the
@@ -48,6 +55,14 @@ public final class Visualizer extends ApplicationAdapter implements InputProcess
 	static void setZoom(int zoom) {
 		ZOOM = zoom;
 	}
+
+	static void setCycles(int cycles) {
+	    numCycles = cycles;
+    }
+
+    static void setRewindSpeed(int cycles) {
+	    rewindSpeed = cycles;
+    }
 
 	/**
 	 * Creates a new {@link Visualizer} for a given list of {@link VisualizationLayer}s.
@@ -93,24 +108,79 @@ public final class Visualizer extends ApplicationAdapter implements InputProcess
 	public synchronized void render () {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-		System.currentTimeMillis();
-		if (nextCycle || cycle == -1) {
+		//Process user input and advance visualization cycle
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            ;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            rewindBack();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            rewindForward();
+        } else if ((nextCycle || cycle == -1) && cycle < numCycles && proceed) {
 			cycle++;
 		}
+
+		//Draw everything
 		for (VisualizationLayer layer : layers) {
 			layer.render(this.cycle);
 		}
 
-		long timeRemains = minCycleLength - (System.currentTimeMillis() - previousTime);
+		//Wait
+		timeRemains = minCycleLength - (System.currentTimeMillis() - previousTime);
 		if (timeRemains > 0) {
-			try {
-				Thread.sleep(timeRemains);
-			} catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		previousTime = System.currentTimeMillis();
+            proceed = false;
+		} else {
+		    proceed = true;
+            previousTime = System.currentTimeMillis();
+        }
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            increaseSpeed();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            decreaseSpeed();
+        }
 	}
+
+	private void increaseSpeed() {
+	    if (timeRemains > 0 && canProcessInput()) {
+            maxCPS += 1;
+            minCycleLength = 1000 / maxCPS;
+            previousProcess = System.currentTimeMillis();
+        }
+    }
+
+    private void decreaseSpeed() {
+        if (maxCPS > 1 && canProcessInput()) {
+            maxCPS -= 1;
+            minCycleLength = 1000 / maxCPS;
+            previousProcess = System.currentTimeMillis();
+        }
+    }
+
+    private void rewindForward() {
+	    if (canProcessInput()) {
+            cycle += rewindSpeed;
+            if (cycle > numCycles) {
+                cycle = numCycles;
+            }
+            previousProcess = System.currentTimeMillis();
+        }
+    }
+
+    private void rewindBack() {
+        if (canProcessInput()) {
+            cycle -= rewindSpeed;
+            if (cycle < 0) {
+                cycle = 0;
+            }
+            previousProcess = System.currentTimeMillis();
+        }
+    }
+
+    private boolean canProcessInput() {
+	    return System.currentTimeMillis() - previousProcess > POLLING_INTERVAL;
+    }
 
 	/**
 	 * Disposes ShapeRenderer and SpriteBatch at the end of visualization.
@@ -122,16 +192,29 @@ public final class Visualizer extends ApplicationAdapter implements InputProcess
 	}
 
 	/**
-	 * Notes when a space bar is pressed to pause/resume a visualization
+	 * Processes inputs from user: SPACE to pause/resume a visualization, LEFT to jump backward, RIGHT to jump forward,
+     * ENTER to start from the beginning.
 	 * @param keycode code of the key that was pressed
 	 * @return always true
 	 */
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.SPACE) {
-			nextCycle = !nextCycle;
-		}
-		return true;
+			this.nextCycle = !this.nextCycle;
+		} else if (keycode == Input.Keys.ENTER) {
+            this.cycle = 0;
+        } else if (keycode == Input.Keys.UP) {
+            increaseSpeed();
+        } else if (keycode == Input.Keys.DOWN) {
+            decreaseSpeed();
+        } else if (keycode == Input.Keys.RIGHT) {
+            rewindForward();
+        } else if (keycode == Input.Keys.LEFT) {
+            rewindBack();
+        } else {
+            return false;
+        }
+        return true;
 	}
 
 	@Override

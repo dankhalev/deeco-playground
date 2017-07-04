@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides robots with some algorithms useful in their daily life.
+ * This class contains some algorithms that help firefighters in their daily lives.
  *
  * @author Danylo Khalyeyev
  */

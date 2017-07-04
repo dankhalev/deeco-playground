@@ -22,7 +22,7 @@ class ObjectVisualizationLayer extends ComponentVisualizationLayer {
         this.drawComponents(reader.getObjects(cycle));
         this.font.getData().setScale(Visualizer.getZoom()/20f);
         this.font.setColor(statusColor);
-        this.drawText(reader.getStatus(), Visualizer.sizeX/2f, Visualizer.sizeY/10f);
+        this.drawText(reader.getStatus(cycle), Visualizer.sizeX/2f, Visualizer.sizeY/10f);
     }
 
 }

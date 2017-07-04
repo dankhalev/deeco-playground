@@ -23,7 +23,7 @@ class ComponentConfigs {
     Map<String, Coloring> tags = new HashMap<>();
     Coloring def;
     Color fontColor;
-    Boolean rotationEnabled = false;
+    Boolean rotationEnabled = true;
     Boolean displayNumbers = false;
     Boolean displayTags = false;
     Boolean circularShape = false;
