@@ -86,7 +86,8 @@ public final class Simulation {
             }
         }
         //Create environment. This should be done between initializing runtime and starting it.
-        Environment env = new EnvironmentImpl(cycles, robots, logfile, map, booleanMap, sensors, objects, sensorNames);
+        Environment env = new EnvironmentImpl(cycles, robots, logfile, map, booleanMap, sensors, objects, sensorNames,
+                deecoNode);
         boolean canStart = Environment.setInstance(env);
         if (!canStart) {
             throw new RuntimeException("Cannot start simulation because another one is running");

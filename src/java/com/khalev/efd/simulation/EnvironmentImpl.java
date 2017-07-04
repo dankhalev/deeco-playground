@@ -1,5 +1,7 @@
 package com.khalev.efd.simulation;
 
+import cz.cuni.mff.d3s.deeco.runtime.DEECoNode;
+import cz.cuni.mff.d3s.deeco.runtime.RuntimeFramework;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
@@ -29,6 +31,7 @@ class EnvironmentImpl extends Environment {
     private Logger logger;
     private String status = "";
     private boolean endSignal = false;
+    private RuntimeFramework runtimeFramework;
 
     /**
      * Creates an Environment with specified parameters.
@@ -42,13 +45,14 @@ class EnvironmentImpl extends Environment {
      * @param sensorNames list of sensor names (in the same order as in list of SIPs)
      */
     EnvironmentImpl(int numCycles, List<RobotPlacement> robots, File logs, EnvironmentMap map, boolean[][] booleanMap,
-                List<SensoryInputsProcessor> sensors, List<ObjectPlacement> objects,
-                List<String> sensorNames) {
+                    List<SensoryInputsProcessor> sensors, List<ObjectPlacement> objects,
+                    List<String> sensorNames, DEECoNode node) {
         try {
             CYCLES = numCycles;
             this.environmentMap = map;
             this.robots = robots;
             this.objects = objects;
+            this.runtimeFramework = node.getRuntimeFramework();
 
             this.simulationEngine = new SimulationEngine(robots, map);
             this.sensorNames = new ArrayList<>();
@@ -103,7 +107,7 @@ class EnvironmentImpl extends Environment {
             startTime = System.nanoTime();
         }
         try {
-            if (!endCondition()) {
+            if (cycle <= CYCLES) {
                 writeSimulationLogs();
                 logger.info("CYCLE " + cycle);
                 //Compute new positions of robots
@@ -129,12 +133,15 @@ class EnvironmentImpl extends Environment {
                     writeRobotLogs();
                 }
                 cycle++;
+            }
 
-                if (endCondition()) {
-                    writeTimerLogs();
-                    logfile.close();
-                    return 1;
+            if (endCondition()) {
+                writeTimerLogs();
+                logfile.close();
+                if (endSignal) {
+                    runtimeFramework.getScheduler().setExecutor(new DoNothingExecutor());
                 }
+                return 1;
             }
 
             return 0;
@@ -202,7 +209,9 @@ class EnvironmentImpl extends Environment {
     private void writeTimerLogs() {
         long endTime = System.nanoTime();
         logger.info("Time elapsed: " + ((endTime - startTime) / 1000000) + " ms");
-        logger.info("Approximately " + ((endTime - startTime) / this.CYCLES / 1000000) + " ms per cycle");
+        if (this.cycle != 0) {
+            logger.info("Approximately " + ((endTime - startTime) / this.cycle / 1000000) + " ms per cycle");
+        }
     }
 
     private void writeRobotLogs() {
