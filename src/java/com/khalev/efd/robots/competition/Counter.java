@@ -6,6 +6,11 @@ import cz.cuni.mff.d3s.deeco.annotations.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Invisible object, that counts the score of the game (updated by {@link ScoreUpdate}).
+ *
+ * @author Danylo Khalyeyev
+ */
 @Component
 public class Counter extends DEECoObject {
 

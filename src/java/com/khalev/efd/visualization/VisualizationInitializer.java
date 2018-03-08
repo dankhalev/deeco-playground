@@ -175,6 +175,7 @@ class VisualizationInitializer {
      * It is important to set zoom right in the beginning, because it determines a many other visualization parameters.
      * @param config an XML configuration file
      * @return XML Document object
+     * @throws VisualizationParametersException if config file is not correct
      */
     private Document initializeXMLAndSetZoom(File config) throws VisualizationParametersException {
         try {

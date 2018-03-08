@@ -7,6 +7,13 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.*;
 
+/**
+ * A robot from Team Blue. Acts autonomously, does not take into account actions of his teammates. However,
+ * it receives information about actions of his opponents through {@link HackEnsemble} which gives him an
+ * advantage (sometimes).
+ *
+ * @author Danylo Khalyeyev
+ */
 @Component
 public class AutonomousRobot extends DEECoRobot {
 

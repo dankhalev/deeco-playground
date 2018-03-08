@@ -1,9 +1,15 @@
-package com.khalev.efd.robots.advanced;
+package com.khalev.efd.robots.predator;
 
 import com.khalev.efd.simulation.Coordinates;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Sends alert signal to a {@link PreyRobot} when a {@link PredatorRobot} shows up nearby.
+ * Also, sends the predator's coordinates.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class SignalEnsemble {

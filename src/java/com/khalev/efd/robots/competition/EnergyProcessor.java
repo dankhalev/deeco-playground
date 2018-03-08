@@ -5,6 +5,11 @@ import com.khalev.efd.simulation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages robots' energies.
+ *
+ * @author Danylo Khalyeyev
+ */
 public class EnergyProcessor extends SensoryInputsProcessor<EnergyInput> {
 
     List<EnergyInput> energies;

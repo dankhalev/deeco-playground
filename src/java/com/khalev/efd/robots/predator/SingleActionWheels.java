@@ -1,21 +1,25 @@
-package com.khalev.efd.robots.basic;
+package com.khalev.efd.robots.predator;
 
 import com.khalev.efd.simulation.Action;
 import com.khalev.efd.simulation.Wheels;
 
 /**
- * The most simple wheels that work.
+ * Wheels that do not allow to move and rotate at the same time.
  *
  * @author Danylo Khalyeyev
  */
-public class SimpleWheels implements Wheels {
+public class SingleActionWheels implements Wheels {
 
+    private static final double MAX_SPEED = 1.0;
     public double rotationAngle = 0.0;
     public double speed = 1.0;
 
     @Override
     public Action sendCurrentAction(int cycle) {
-        return new Action(this.speed, this.rotationAngle);
+        if (this.speed != 0) {
+            this.rotationAngle = 0;
+        }
+        return new Action(this.speed * MAX_SPEED, this.rotationAngle);
     }
 
     @Override

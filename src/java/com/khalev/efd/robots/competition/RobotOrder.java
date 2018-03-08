@@ -2,6 +2,11 @@ package com.khalev.efd.robots.competition;
 
 import com.khalev.efd.simulation.Coordinates;
 
+/**
+ * Orders that {@link CommandStation} sends to {@link ControlledRobot}s.
+ *
+ * @author Danylo Khalyeyev
+ */
 public class RobotOrder {
 
     Type type;

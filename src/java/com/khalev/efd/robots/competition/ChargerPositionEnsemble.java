@@ -4,6 +4,11 @@ import com.khalev.efd.simulation.Coordinates;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Informs robots about the position of their team's charger station.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class ChargerPositionEnsemble {

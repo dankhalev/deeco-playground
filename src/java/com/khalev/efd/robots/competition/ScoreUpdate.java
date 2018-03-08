@@ -6,6 +6,11 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Ensemble that updates the score of the game.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class ScoreUpdate {

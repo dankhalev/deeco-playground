@@ -1,11 +1,16 @@
-package com.khalev.efd.robots.advanced;
+package com.khalev.efd.robots.predator;
 
-import com.khalev.efd.robots.basic.SimpleWheels;
 import com.khalev.efd.simulation.*;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Stays still until a {@link PredatorRobot} shows up nearby. Then, it runs in the opposite direction
+ * from the predator.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Component
 public class PreyRobot extends DEECoRobot {
 
@@ -15,7 +20,7 @@ public class PreyRobot extends DEECoRobot {
     public Boolean reaction = false;
 
     public PreyRobot() {
-        wheels = new SimpleWheels();
+        wheels = new SingleActionWheels();
         sensor.registerSensor("coords");
     }
 
@@ -30,7 +35,7 @@ public class PreyRobot extends DEECoRobot {
             @InOut("position") ParamHolder<Coordinates> position,
             @In("rID") Integer rID
     ) {
-        SimpleWheels wheels = (SimpleWheels) wheels1.value;
+        SingleActionWheels wheels = (SingleActionWheels) wheels1.value;
         CollisionData collisionData = sensor.getInputFromSensor("collisions", CollisionData.class);
         Coordinates coordinates = sensor.getInputFromSensor("coords", Coordinates.class);
 
@@ -51,12 +56,12 @@ public class PreyRobot extends DEECoRobot {
         }
     }
 
-    private static void runAway(Coordinates position, Coordinates predator, SimpleWheels wheels) {
+    private static void runAway(Coordinates position, Coordinates predator, SingleActionWheels wheels) {
         wheels.rotationAngle = Math.atan2(predator.x - position.x, predator.y - position.y) - position.angle + Math.PI;
         wheels.speed = 0.0;
     }
 
-    private static void rotate(CollisionData collisionData, SimpleWheels wheels) {
+    private static void rotate(CollisionData collisionData, SingleActionWheels wheels) {
         if (collisionData.action.type != Action.Type.ROTATE) {
             wheels.speed = 0.0;
             wheels.rotationAngle = Math.PI / 3.0;
@@ -66,7 +71,7 @@ public class PreyRobot extends DEECoRobot {
         }
     }
 
-    private static void calm(SimpleWheels wheels) {
+    private static void calm(SingleActionWheels wheels) {
         wheels.rotationAngle = 0.0;
         wheels.speed = 0.0;
     }

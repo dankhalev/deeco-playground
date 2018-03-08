@@ -8,6 +8,8 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 /**
  * This robot moves forward with random speed till it hits some obstacle; then, it rotates a random degree.
  * It can also rotate at any other moment with probability of 2%.
+ *
+ * @author Danylo Khalyeyev
  */
 @Component
 public class RandomRobot extends DEECoRobot {

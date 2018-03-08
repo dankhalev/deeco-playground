@@ -8,6 +8,11 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A robot from Team Red. Executes orders of {@link CommandStation}.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Component
 public class ControlledRobot extends DEECoRobot{
 

@@ -8,6 +8,11 @@ import cz.cuni.mff.d3s.deeco.annotations.PeriodicScheduling;
 import cz.cuni.mff.d3s.deeco.annotations.Process;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Items that robots have to collect to receive points.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Component
 public class CollectibleItem extends DEECoObject {
 

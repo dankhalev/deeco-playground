@@ -11,7 +11,6 @@ import com.khalev.efd.visualization.VisualizationLayer;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +23,10 @@ public class TemperatureLayer extends VisualizationLayer {
 
     private int[][] values;
     private List<int[][]> map = new ArrayList<>();
-    private int cycles;
     private int sizeX;
     private int sizeY;
     private Pixmap pixmap;
+    private Sprite[] sprites;
 
     public TemperatureLayer() {
 
@@ -36,39 +35,43 @@ public class TemperatureLayer extends VisualizationLayer {
     @Override
     protected void render(int cycle) {
         //Get the temperature data for this cycle.
-        if (cycle < map.size()) {
-            values = map.get(cycle);
-        } else {
-            values = map.get(map.size()-1);
+        if (cycle >= map.size()) {
+            cycle = map.size()-1;
         }
+        values = map.get(cycle);
         int zoom = Visualizer.getZoom();
 
-        //Initialize pixmap at the first call of this method.
-        if (pixmap == null) {
+        //If this cycle was not visualized previously, compute a pixmap for it,
+        // and store the sprite in cache
+        if (cycle < sprites.length && sprites[cycle] == null) {
             pixmap = new Pixmap(sizeX*zoom, sizeY * zoom, Pixmap.Format.RGB888);
-        }
-
-        //Compute the value of every pixel on the screen by interpolating it from adjacent temperature values.
-        for (int i = 0; i < sizeX * zoom; i++) {
-            for (int j = 0; j < sizeY * zoom; j++) {
-                float v00 = values[i / zoom][j / zoom] / 256f;
-                float v01 = values[i / zoom][j / zoom + 1] / 256f;
-                float v10 = values[i / zoom + 1][j / zoom] / 256f;
-                float v11 = values[i / zoom + 1][j / zoom + 1] / 256f;
-                float offX = (i % zoom) / (float) (zoom);
-                float offY = (j % zoom) / (float) (zoom);
-                float v;
-                v = v00 * (1 - offX) * (1 - offY) + v01 * offY * (1 - offX) + v10 * offX * (1 - offY) + v11 * offX * offY;
-                pixmap.setColor(new Color(v, v, v, 1f));
-                pixmap.drawPixel(i, j);
+            //Compute the value of every pixel on the screen by
+            //interpolating it from adjacent temperature values.
+            for (int i = 0; i < sizeX * zoom; i++) {
+                for (int j = 0; j < sizeY * zoom; j++) {
+                    float v00 = values[i / zoom][j / zoom] / 256f;
+                    float v01 = values[i / zoom][j / zoom + 1] / 256f;
+                    float v10 = values[i / zoom + 1][j / zoom] / 256f;
+                    float v11 = values[i / zoom + 1][j / zoom + 1] / 256f;
+                    float offX = (i % zoom) / (float) (zoom);
+                    float offY = (j % zoom) / (float) (zoom);
+                    float v;
+                    v = v00 * (1 - offX) * (1 - offY) +
+                            v01 * offY * (1 - offX) +
+                            v10 * offX * (1 - offY) +
+                            v11 * offX * offY;
+                    pixmap.setColor(new Color(v, v, v, 1f));
+                    pixmap.drawPixel(i, j);
+                }
             }
+            Sprite sprite = new Sprite(new Texture(pixmap));
+            sprite.setFlip(false, true);
+            sprites[cycle] = sprite;
         }
 
         //Draw the map.
         spriteBatch.begin();
-        Sprite sprite = new Sprite(new Texture(pixmap));
-        sprite.setFlip(false, true);
-        spriteBatch.draw(sprite, 0, 0);
+        spriteBatch.draw(sprites[cycle], 0, 0);
         spriteBatch.end();
     }
 
@@ -84,7 +87,6 @@ public class TemperatureLayer extends VisualizationLayer {
 
 
                 boolean isNextCycleAvailable = fileInputStream.available() > 0;
-                int cycle = 0;
                 while (isNextCycleAvailable) {
                     int[][] cValues = new int[sizeX+1][sizeY+1];
                     for (int i = 0; i < sizeX; i++) {
@@ -94,8 +96,8 @@ public class TemperatureLayer extends VisualizationLayer {
                     }
                     map.add(cValues);
                     isNextCycleAvailable = fileInputStream.available() > 0;
-                    cycle++;
                 }
+                this.sprites = new Sprite[map.size()];
             } catch (java.io.IOException e) {
                 throw new RuntimeException(e);
             }

@@ -6,6 +6,11 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Through this ensemble robots from Team Blue receive information about Team Red's actions.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class HackEnsemble {

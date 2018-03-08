@@ -7,9 +7,17 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Ensemble that updates the global simulation status and finishes the simulation, when a team
+ * receives enough points.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class StatusUpdate {
+
+    static int scoreToWin = 30;
 
     @Membership
     public static boolean membership(
@@ -27,7 +35,8 @@ public class StatusUpdate {
             @In("coord.team1") Map<Integer, Integer> team1,
             @In("coord.team2") Map<Integer, Integer> team2,
             @InOut("member.status") ParamHolder<String> status,
-            @In("member.cycle") Integer cycle
+            @In("member.cycle") Integer cycle,
+            @InOut("member.endSignal") ParamHolder<Boolean> endSignal
     ) {
         int team1Score = 0;
         int team2Score = 0;
@@ -38,6 +47,14 @@ public class StatusUpdate {
             team2Score += integer;
         }
         status.value = "CYCLE: " + cycle + "; SCORE: " + team1Score + "/" + team2Score;
+        if (team1Score >= scoreToWin) {
+            status.value = "CYCLE: " + cycle + "; Team Red wins the game!";
+            endSignal.value = true;
+        }
+        if (team2Score >= scoreToWin){
+            status.value = "CYCLE: " + cycle + "; Team Blue wins the game!";
+            endSignal.value = true;
+        }
     }
 
 }

@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main (String[] arg) throws IOException, VisualizationParametersException {
 		if (arg.length < 1) {
-			System.out.println("Please provide a path to a scenario file");
+			System.out.println("You need to provide a path to a simulation logs file to run a visualization");
 		} else {
 			Visualization visualization;
 			if (arg.length == 1) {

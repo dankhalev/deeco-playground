@@ -21,10 +21,12 @@ class LogfileReader {
     private List<List<ComponentParameters>> objectLogs = new ArrayList<>();
 
     /**
+     *
      * @param logs a BufferedReader to read simulation logs from. The header of the logfile should be already read in
      *             this reader.
      * @param robotCoordinates list of {@link ComponentParameters} for robots
      * @param objectCoordinates list of {@link ComponentParameters} for objects
+     * @throws VisualizationParametersException if a simulation logs file is not correct
      */
     LogfileReader(BufferedReader logs, List<ComponentParameters> robotCoordinates,
                   List<ComponentParameters> objectCoordinates) throws VisualizationParametersException {
@@ -66,6 +68,7 @@ class LogfileReader {
 
     /**
      * Returns a status string for a cycle that is currently being visualized.
+     * @param cycle current cycle
      * @return a status string for a cycle that is currently being visualized
      */
     String getStatus(int cycle) {

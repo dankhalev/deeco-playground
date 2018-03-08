@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <visualization zoom="6" maxCPS="15" fontColor="Green">
-	<additional class="com.khalev.efd.robots.firefighters.environment.TemperatureLayer" arg="simulation-logs/firemap.txt"/>
-	<objects>
+	<additional class="com.khalev.efd.robots.firefighters.environment.TemperatureLayer" arg="simulation-logs/firemap.bin"/>
+	<objects circularShape="true">
 		<class-based>
-			<default texture="examples/images/station.png"/>
+			<default texture="examples/images/station-red.png"/>
 		</class-based>
 	</objects>
 	<robots displayNumbers="true" enableRotation="true" fontColor="Blue">

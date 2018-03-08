@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * Distributes orders from {@link CommandStation} to {@link ControlledRobot}s.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class OrderEnsemble {

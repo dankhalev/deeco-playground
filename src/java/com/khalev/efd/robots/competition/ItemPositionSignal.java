@@ -7,6 +7,11 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Signals position of items to the components that have the corresponding interface.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class ItemPositionSignal {

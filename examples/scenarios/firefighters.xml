@@ -2,7 +2,7 @@
 <simulation cycles="500" logfile="simulation-logs/firefighters.txt" sizeX="100" sizeY="100">
 	<sensors>
 		<sensor name="coords" processor="com.khalev.efd.robots.firefighters.environment.CoordinatesProcessor"/>
-		<sensor name="energy" processor="com.khalev.efd.robots.firefighters.environment.EnergyTemperatureProcessor" arg="simulation-logs/firemap.txt"/>
+		<sensor name="energy" processor="com.khalev.efd.robots.firefighters.environment.EnergyTemperatureProcessor" arg="simulation-logs/firemap.bin"/>
 	</sensors>
 	<robots>
 		<robot class="com.khalev.efd.robots.firefighters.leader.FirefighterLeader" posX="55.0" posY="55" angle="180"/>

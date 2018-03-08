@@ -43,6 +43,7 @@ class EnvironmentImpl extends Environment {
      * @param sensors list of {@link SensoryInputsProcessor}s
      * @param objects list of initial object placements
      * @param sensorNames list of sensor names (in the same order as in list of SIPs)
+     * @param node a DEECoNode on which the simulation runs
      */
     EnvironmentImpl(int numCycles, List<RobotPlacement> robots, File logs, EnvironmentMap map, boolean[][] booleanMap,
                     List<SensoryInputsProcessor> sensors, List<ObjectPlacement> objects,

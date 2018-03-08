@@ -6,6 +6,11 @@ import com.khalev.efd.simulation.SensorySystem;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Responsible for interaction between robots and {@link CollectibleItem}s, when they are close to each other.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class CollectEnsemble {

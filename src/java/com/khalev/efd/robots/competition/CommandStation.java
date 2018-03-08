@@ -9,6 +9,13 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
 import java.util.*;
 
+/**
+ * Recharge station for Team Red. Apart from recharging robots' batteries, distributes orders to robots.
+ * It decides about the best possible destination for robots, based on their positions, positions of
+ * items, and robots' energies.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Component
 public class CommandStation extends DEECoObject {
 

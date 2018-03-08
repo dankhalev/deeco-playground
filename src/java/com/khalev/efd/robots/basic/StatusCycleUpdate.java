@@ -4,6 +4,11 @@ import com.khalev.efd.simulation.Coordinator;
 import cz.cuni.mff.d3s.deeco.annotations.*;
 import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 
+/**
+ * Updates the simulation status to display a current cycle number.
+ *
+ * @author Danylo Khalyeyev
+ */
 @Ensemble
 @PeriodicScheduling(period = 1)
 public class StatusCycleUpdate {

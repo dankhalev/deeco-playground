@@ -8,6 +8,8 @@ import cz.cuni.mff.d3s.deeco.task.ParamHolder;
 /**
  * This robot moves forward till it hits some obstacle; then it rotates to the direction which is opposite to the
  * collision point.
+ *
+ * @author Danylo Khalyeyev
  */
 @Component
 public class OrtogonalRobot extends DEECoRobot {

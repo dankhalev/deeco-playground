@@ -4,6 +4,12 @@ import com.khalev.efd.simulation.Action;
 import com.khalev.efd.simulation.SensorySystem;
 import com.khalev.efd.simulation.Wheels;
 
+/**
+ * These wheels work only if a robot has at least some energy. Robots need to recharge from
+ * time to time to keep going.
+ *
+ * @author Danylo Khalyeyev
+ */
 public class PoweredWheels implements Wheels {
 
     private static final double MAX_SPEED = 1.0;
