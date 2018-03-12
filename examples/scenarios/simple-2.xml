@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <simulation cycles="500" logfile="simulation-logs/simple-2.txt" bitmap="examples/maps/map02.png">
 	<robots>
-		<robot class="com.khalev.efd.robots.basic.OrtogonalRobot" posX="50.0" posY="50.0" angle="90"/>
-		<robot class="com.khalev.efd.robots.basic.OrtogonalRobot" posX="60.0" posY="50.0" angle="140"/>
-		<robot class="com.khalev.efd.robots.basic.OrtogonalRobot" posX="50.0" posY="60.0" angle="20"/>
-		<robot class="com.khalev.efd.robots.basic.OrtogonalRobot" posX="60.0" posY="60.0" angle="230"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.basic.OrtogonalRobot" posX="50.0" posY="50.0" angle="90"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.basic.OrtogonalRobot" posX="60.0" posY="50.0" angle="140"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.basic.OrtogonalRobot" posX="50.0" posY="60.0" angle="20"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.basic.OrtogonalRobot" posX="60.0" posY="60.0" angle="230"/>
 	</robots>
 </simulation>

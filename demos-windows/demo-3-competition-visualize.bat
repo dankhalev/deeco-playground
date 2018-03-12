@@ -14,7 +14,7 @@ if exist "simulation-logs/competition.txt" (
 
 	del sources6
 
-	java -cp "out;libs/*" com.khalev.efd.visualization.Main simulation-logs/competition.txt examples/configs/competition-config.xml
+	java -cp "out;libs/*" cz.cuni.mff.d3s.deeco.playground.visualization.Main simulation-logs/competition.txt examples/configs/competition-config.xml
 
 ) else (
 	echo You need to simulate this scenario before you can visualize it

@@ -96,7 +96,7 @@
     </path>
 
     <target name="run.simulation" depends="compile.all" description="Executes simulation">
-        <java fork="true" classname="com.khalev.efd.simulation.Main">
+        <java fork="true" classname="cz.cuni.mff.d3s.deeco.playground.simulation.Main">
             <arg line="${args}"/>
             <classpath refid="simulation.classpath"/>
         </java>
@@ -108,7 +108,7 @@
     </path>
 
     <target name="run.visualization" depends="compile.all" description="Executes visualization">
-        <java fork="true" classname="com.khalev.efd.visualization.Main">
+        <java fork="true" classname="cz.cuni.mff.d3s.deeco.playground.visualization.Main">
             <arg line="${args}"/>
             <classpath refid="visualization.classpath"/>
         </java>

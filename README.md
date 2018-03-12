@@ -40,5 +40,6 @@ contain two already prepared run configurations: Simulation and Visualization.
 
 There are also `.project` and `.classpath` files in the project directory, that can
 be used to import the project to Eclipse or NetBeans. The runnable classes are 
-`com.khalev.efd.simulation.Main` and `com.khalev.efd.visualization.Main` for 
+`cz.cuni.mff.d3s.deeco.playground.simulation.Main` and 
+`cz.cuni.mff.d3s.deeco.playground.visualization.Main` for
 Simulation and Visualization respectively.

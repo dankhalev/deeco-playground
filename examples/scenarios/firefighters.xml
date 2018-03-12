@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <simulation cycles="500" logfile="simulation-logs/firefighters.txt" sizeX="100" sizeY="100">
 	<sensors>
-		<sensor name="coords" processor="com.khalev.efd.robots.firefighters.environment.CoordinatesProcessor"/>
-		<sensor name="energy" processor="com.khalev.efd.robots.firefighters.environment.EnergyTemperatureProcessor" arg="simulation-logs/firemap.bin"/>
+		<sensor name="coords" processor="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.environment.CoordinatesProcessor"/>
+		<sensor name="energy" processor="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.environment.EnergyTemperatureProcessor" arg="simulation-logs/firemap.bin"/>
 	</sensors>
 	<robots>
-		<robot class="com.khalev.efd.robots.firefighters.leader.FirefighterLeader" posX="55.0" posY="55" angle="180"/>
-		<robot class="com.khalev.efd.robots.firefighters.drone.FirefighterDrone" posX="50.0" posY="50" angle="180"/>
-		<robot class="com.khalev.efd.robots.firefighters.drone.FirefighterDrone" posX="60.0" posY="50" angle="180"/>
-		<robot class="com.khalev.efd.robots.firefighters.drone.FirefighterDrone" posX="50.0" posY="60" angle="180"/>
-		<robot class="com.khalev.efd.robots.firefighters.drone.FirefighterDrone" posX="60.0" posY="60" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.leader.FirefighterLeader" posX="55.0" posY="55" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.FirefighterDrone" posX="50.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.FirefighterDrone" posX="60.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.FirefighterDrone" posX="50.0" posY="60" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.FirefighterDrone" posX="60.0" posY="60" angle="180"/>
 	</robots>
 	<ensembles>
-		<ensemble class="com.khalev.efd.robots.firefighters.drone.StationEnsemble"/>
-		<ensemble class="com.khalev.efd.robots.firefighters.leader.DataAggregationAndOrderDistribution"/>
-		<ensemble class="com.khalev.efd.robots.firefighters.drone.ModeSwitch"/>
+		<ensemble class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.StationEnsemble"/>
+		<ensemble class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.leader.DataAggregationAndOrderDistribution"/>
+		<ensemble class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.ModeSwitch"/>
 	</ensembles>
 	<objects>
-		<object class="com.khalev.efd.robots.firefighters.drone.ChargingStation" posX="55.0" posY="55" size="12.0"/>
+		<object class="cz.cuni.mff.d3s.deeco.playground.examples.firefighters.drone.ChargingStation" posX="55.0" posY="55" size="12.0"/>
 	</objects>
 </simulation>

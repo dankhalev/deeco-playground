@@ -14,7 +14,7 @@ if exist "simulation-logs/predator.txt" (
 
 	del sources2
 
-	java -cp "out;libs/*" com.khalev.efd.visualization.Main simulation-logs/predator.txt examples/configs/config.xml
+	java -cp "out;libs/*" cz.cuni.mff.d3s.deeco.playground.visualization.Main simulation-logs/predator.txt examples/configs/config.xml
 
 ) else (
 	echo You need to simulate this scenario before you can visualize it

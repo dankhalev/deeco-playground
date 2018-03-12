@@ -14,7 +14,7 @@ if exist "simulation-logs/firefighters.txt" (
 
 	del sources4
 
-	java -cp "out;libs/*" com.khalev.efd.visualization.Main simulation-logs/firefighters.txt examples/configs/firefighters-config.xml
+	java -cp "out;libs/*" cz.cuni.mff.d3s.deeco.playground.visualization.Main simulation-logs/firefighters.txt examples/configs/firefighters-config.xml
 
 ) else (
 	echo You need to simulate this scenario before you can visualize it

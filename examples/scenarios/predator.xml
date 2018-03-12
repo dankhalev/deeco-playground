@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <simulation cycles="500" logfile="simulation-logs/predator.txt" sizeX="100" sizeY="100">
 	<sensors>
-		<sensor name="coords" processor="com.khalev.efd.robots.predator.CoordinatesProcessor"/>
+		<sensor name="coords" processor="cz.cuni.mff.d3s.deeco.playground.examples.predator.CoordinatesProcessor"/>
 	</sensors>
 	<robots>
-		<robot class="com.khalev.efd.robots.predator.PredatorRobot" posX="50.0" posY="50" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="50.0" posY="30" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="50.0" posY="40" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="40.0" posY="50" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="30.0" posY="50" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="50.0" posY="60" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="50.0" posY="70" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="60.0" posY="50" angle="180"/>
-		<robot class="com.khalev.efd.robots.predator.PreyRobot" posX="70.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PredatorRobot" posX="50.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="50.0" posY="30" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="50.0" posY="40" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="40.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="30.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="50.0" posY="60" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="50.0" posY="70" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="60.0" posY="50" angle="180"/>
+		<robot class="cz.cuni.mff.d3s.deeco.playground.examples.predator.PreyRobot" posX="70.0" posY="50" angle="180"/>
 	</robots>
 	<ensembles>
-		<ensemble class="com.khalev.efd.robots.predator.SignalEnsemble"/>
+		<ensemble class="cz.cuni.mff.d3s.deeco.playground.examples.predator.SignalEnsemble"/>
 	</ensembles>
 </simulation>
