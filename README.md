@@ -4,7 +4,7 @@ The DEECo Playgrond is a framework for simulation and visualization of the smart
 Cyber-Physical Systems. A documentation on this framework can be found in the **manual.html**
 file.
 
-## 1. Execution of example scenarios
+## Execution of example scenarios
 
 To run the application you need to have JDK >=8 installed.
 
@@ -33,7 +33,7 @@ file, the second one is an optional configuration file.
 The ant build file also allows to generate javadoc with the command `ant doc`.
 
 
-## 2. Importing the project to IDE
+## Importing the project to IDE
 
 The project directory can be imported into an IntelliJ IDEA directly. It will
 contain two already prepared run configurations: Simulation and Visualization.
@@ -43,3 +43,8 @@ be used to import the project to Eclipse or NetBeans. The runnable classes are
 `cz.cuni.mff.d3s.deeco.playground.simulation.Main` and 
 `cz.cuni.mff.d3s.deeco.playground.visualization.Main` for
 Simulation and Visualization respectively.
+
+## License
+
+Our work is licensed under the [Apache 2 License](http://www.apache.org/licenses/LICENSE-2.0.html), 
+meaning youcan use it free of charge, without strings attached in commercial and non-commercial projects. 
