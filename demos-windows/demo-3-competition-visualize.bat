@@ -1,6 +1,6 @@
 @echo off
 
-cd ..
+cd %~dp0/..
 
 if not exist "out" mkdir out
 
