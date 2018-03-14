@@ -1,12 +1,17 @@
 # DEECo Playground
 
-The DEECo Playgrond is a framework for simulation and visualization of the smart 
-Cyber-Physical Systems. A documentation on this framework can be found in the **manual.html**
-file.
+The DEECo Playgrond is a framework for simulation and visualization of scenarios for smart Cyber-Physical Systems. 
+
+## Documentation
+
+A step-by-step tutorial on the scenario creation with this framework can be found in the **Scenario Creation Guide**.
+The **Implementation and Architecture** document explores the playground's internal implementation in detail.
+The **manual.html** file contains descriptions of the formats of scenario files and configuration files.
+It also provides an overview of the classes that user needs to use in the process of scenario creation, explaining the meaning and function of all their methods and attributes.
 
 ## Execution of example scenarios
 
-To run the application you need to have JDK >=8 installed.
+In order to run the application you need to have JDK >=8 installed.
 
 There are 3 example scenarios which can be executed with corresponding shell 
 (on Linux systems) or batch (on Windows) scripts. They can be found in the `demos-linux`
@@ -47,4 +52,4 @@ Simulation and Visualization respectively.
 ## License
 
 Our work is licensed under the [Apache 2 License](http://www.apache.org/licenses/LICENSE-2.0.html), 
-meaning youcan use it free of charge, without strings attached in commercial and non-commercial projects. 
+meaning that you can use it free of charge, without strings attached in commercial and non-commercial projects. 
